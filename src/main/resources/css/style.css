@@ -1,0 +1,56 @@
+.item-border{
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+/* CSS for the custom button */
+.custom-button {
+}
+.custom-button:hover {
+    -fx-background-color: #28a4ff;
+}
+#btn:hover {
+    -fx-background-color: #28a4ff;
+
+}
+
+.table-view {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+}
+
+.table-view .column-header {
+    -fx-background-color: #e6e6e6;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #0096c9;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(224, 224, 224, 0.58);
+}
+.table-row-cell:selected:hover {
+    -fx-background-color: #0078d7; /* Change to your desired hover color */
+    -fx-text-fill: #ffffff; /* Change to your desired text color */
+}
+.custom-table-cell {
+    -fx-padding: 10px;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+.item-border-clicker{
+    -fx-border-color: red;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+    -fx-background-color: #f0f0f0;
+}
+.grid-pane .grid-cell {
+    -fx-border-width: 0 0 2px 0; /* top right bottom left */
+    -fx-border-color: transparent transparent black transparent;
+}

@@ -1,6 +1,6 @@
 package com.sgu.quanlytracnghiem.Util;
 
-import com.sgu.quanlytracnghiem.GUI.Home;
+import com.sgu.quanlytracnghiem.GUI.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +19,7 @@ public class UI_Util {
     public static void openStage(String fxmlFile,Runnable onCloseCallback) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Home.class.getResource(fxmlFile));
+            loader.setLocation(Main.class.getResource(fxmlFile));
             Parent root = loader.load();
             AnchorPane anchorPane = (AnchorPane) root;
             Stage stage = new Stage();
