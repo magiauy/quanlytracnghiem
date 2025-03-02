@@ -2,6 +2,7 @@ package com.sgu.quanlytracnghiem.DAO;
 
 import com.sgu.quanlytracnghiem.DTO.User;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
+import com.sgu.quanlytracnghiem.Interface.DAO.IAuth_DAO;
 import com.sgu.quanlytracnghiem.Util.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 
 @Slf4j
-public class User_DAO implements GenericDAO<User> {
+public class User_DAO implements GenericDAO<User>, IAuth_DAO {
     Connection connection = Connect.getInstance().getConnection();
 
     @Override
@@ -210,5 +211,26 @@ public class User_DAO implements GenericDAO<User> {
             }
         }
         return false;
+    }
+
+    public User getUser(String email) {
+        try {
+            String sql = "SELECT * FROM user WHERE userEmail = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("userID"));
+                user.setUsername(resultSet.getString("userName"));
+                user.setEmail(resultSet.getString("userEmail"));
+                user.setFullName(resultSet.getString("userFullName"));
+                user.setAdmin(resultSet.getBoolean("isAdmin"));
+                return user;
+            }
+        } catch (Exception e) {
+            log.error("Failed to get user by email: ", e);
+        }
+        return null;
     }
 }

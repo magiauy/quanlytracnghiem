@@ -38,4 +38,5 @@ public class UI_Util {
     public static void configureButton(Button button, EventHandler<ActionEvent> eventHandler) {
     button.setOnAction(eventHandler);
 }
+
 }

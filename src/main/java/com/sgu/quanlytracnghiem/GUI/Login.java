@@ -1,6 +1,7 @@
 package com.sgu.quanlytracnghiem.GUI;
 
 import com.sgu.quanlytracnghiem.BUS.Auth_BUS;
+import com.sgu.quanlytracnghiem.DTO.User;
 import com.sgu.quanlytracnghiem.Interface.BUS.IAuth;
 import com.sgu.quanlytracnghiem.Util.UI_Util;
 import com.sgu.quanlytracnghiem.Util.ValidationUtil;
@@ -13,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -28,17 +30,21 @@ public class Login {
     private Button btnLogin;
     IAuth auth_bus = new Auth_BUS();
 
+    @Getter
+    private static  User user;
+
     @FXML
     public void initialize() {
         btnLogin.setOnAction(e -> login());
     }
 
     public void login() {
-        String username = txtUsername.getText();
+        String email = txtUsername.getText();
         String password = txtPassword.getText();
         if (ValidationUtil.isEmpty(txtUsername, txtPassword)) return;
-        if(auth_bus.login(username, password)) {
+        if(auth_bus.login(email, password)) {
             ValidationUtil.showInfoAlert("Đăng nhập thành công");
+            user = auth_bus.getUser(email);
             openStage("Main.fxml");
         } else {
             ValidationUtil.showErrorAlert("Đăng nhập thất bại");

@@ -13,17 +13,12 @@
    <children>
       <Pane prefHeight="729.0" prefWidth="197.0" style="-fx-background-color: #919191;">
          <children>
-            <ImageView fitHeight="148.0" fitWidth="148.0" layoutX="26.0" layoutY="14.0">
-               <image>
-                  <Image url="@../../../../fit-fotor-2025030214032.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="45.0" layoutY="176.0" text="User:">
+            <Label layoutX="31.0" layoutY="176.0" text="User:">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="84.0" layoutY="176.0" text="Username">
+            <Label fx:id="lblUsername" layoutX="70.0" layoutY="176.0" text="Username">
                <font>
                   <Font size="16.0" />
                </font>
@@ -100,7 +95,13 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <ImageView fitHeight="170.0" fitWidth="170.0" layoutX="14.0" layoutY="6.0" mouseTransparent="true" smooth="false">
+               <image>
+                  <Image url="@../../../../logo.5e946967e23bac92e8ec.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
+      <Pane fx:id="pane" layoutX="197.0" prefHeight="729.0" prefWidth="848.0" />
    </children>
 </AnchorPane>
