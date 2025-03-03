@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(40) DEFAULT NULL,
   `userEmail` varchar(20) DEFAULT NULL,
-  `userPassword` varchar(40) DEFAULT NULL,
+  `userPassword` varchar(60) DEFAULT NULL,
   `userFullName` varchar(40) DEFAULT NULL,
   `isAdmin` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`userID`)
