@@ -23,4 +23,7 @@ public class Test {
     private boolean testStatus;
     private ArrayList<Topic> topics;
 
+    public boolean getTestStatus() {
+        return testStatus;
+    }
 }
