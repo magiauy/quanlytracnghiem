@@ -27,31 +27,39 @@ public class User_BUS implements CRUD<User> {
         return null;
     }
 
-    public void add(User obj) {
-        user_dao.insert(obj);
-        users.add(obj);
+    public boolean add(User obj) {
+        if (user_dao.insert(obj)) {
+            users.add(obj);
+            return true;
+        }
+        return false;
     }
 
-    public void update(User obj) {
-        user_dao.update(obj);
-        for (User user : users) {
-            if (user.getId() == obj.getId()) {
-                user.setUsername(obj.getUsername());
-                user.setPassword(obj.getPassword());
-                user.setEmail(obj.getEmail());
-                user.setFullName(obj.getFullName());
-                user.setAdmin(obj.isAdmin());
+    public boolean update(User obj) {
+        if (user_dao.update(obj)) {
+            for (User user : users) {
+                if (user.getId() == obj.getId()) {
+                    user.setUsername(obj.getUsername());
+                    user.setPassword(obj.getPassword());
+                    user.setEmail(obj.getEmail());
+                    user.setFullName(obj.getFullName());
+                    user.setAdmin(obj.isAdmin());
+                    return true;
+                }
             }
         }
+        return false;
     }
 
-    public void delete(String id) {
-        user_dao.delete(id);
-        for (User user : users) {
-            if (user.getId() == Integer.parseInt(id)) {
-                users.remove(user);
-                break;
+    public boolean delete(String id) {
+        if (user_dao.delete(id)) {
+            for (User user : users) {
+                if (user.getId() == Integer.parseInt(id)) {
+                    users.remove(user);
+                    return true;
+                }
             }
         }
+        return false;
     }
 }

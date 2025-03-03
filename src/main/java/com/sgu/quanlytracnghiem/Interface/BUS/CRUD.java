@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public interface CRUD <T> {
      ArrayList<T> getAll();
      T getByID(String id);
-     void add(T obj);
-     void update(T obj);
-     void delete(String id);
+     boolean add(T obj);
+     boolean update(T obj);
+     boolean delete(String id);
 
 }
