@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="150.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label fx:id="lblTitle" layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="613.0" text="Title">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="96.0" text="Ngày kiểm tra:">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label fx:id="lblDate" layoutX="168.0" layoutY="95.0" text="XX/XX/XXXX">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label fx:id="lblStatus" layoutX="656.0" layoutY="14.0" prefHeight="40.0" prefWidth="87.0" text="Status">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Label>
+        <Label layoutX="313.0" layoutY="95.0" text="Dễ:" textFill="#15ff00">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label fx:id="lblEasy" layoutX="356.0" layoutY="97.0" text="XXX">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label layoutX="408.0" layoutY="99.0" text="Vừa:" textFill="#ffcc00">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label fx:id="lblMedium" layoutX="457.0" layoutY="99.0" text="XXX">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label layoutX="506.0" layoutY="101.0" text="Khó:" textFill="RED">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label fx:id="lblDiff" layoutX="557.0" layoutY="102.0" text="XXX">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label layoutX="14.0" layoutY="58.0" text="Thời gian làm bài:">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label fx:id="lblTime" layoutX="208.0" layoutY="58.0" text="XXX Phút">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label layoutX="331.0" layoutY="58.0" text="Số lần làm bài:">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Label fx:id="lblLimit" layoutX="492.0" layoutY="58.0" text="XX">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

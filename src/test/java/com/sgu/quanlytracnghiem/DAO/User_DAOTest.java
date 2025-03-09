@@ -11,7 +11,8 @@ class User_DAOTest {
     @Test
     @Order(1)
     void insert() {
-        User user = new User(2, "admin", "admin@123", "admin@gmail.com", "admin", true);
+//        User user = new User(2, "admin", "admin@123", "admin@gmail.com", "admin", true);
+        User user = new User(3, "admin", "1", "admin@gmail.com", "admin", true);
 
         User_DAO user_dao = new User_DAO();
         assertTrue(user_dao.insert(user));
