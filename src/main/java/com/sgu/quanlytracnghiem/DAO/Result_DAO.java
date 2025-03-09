@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Slf4j
-public class ResultDAO implements GenericDAO<Result> {
+public class Result_DAO implements GenericDAO<Result> {
     Connection connection = Connect.getInstance().getConnection();
     GenericDAO<Answers> answers_dao = new Answers_DAO();
 

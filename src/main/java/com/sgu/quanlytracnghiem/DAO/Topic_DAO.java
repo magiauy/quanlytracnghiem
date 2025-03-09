@@ -24,7 +24,7 @@ public class Topic_DAO implements GenericDAO<Topic> {
                  preparedStatement.setInt(1, obj.getTopicID());
                  preparedStatement.setString(2, obj.getTopicTitle());
                  preparedStatement.setInt(3, obj.getTopicParentID());
-                 preparedStatement.setBoolean(4, obj.isTopicStatus());
+                 preparedStatement.setBoolean(4, obj.getTopicStatus());
                  preparedStatement.executeUpdate();
              }
              connection.commit();
@@ -58,7 +58,7 @@ public class Topic_DAO implements GenericDAO<Topic> {
             try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, obj.getTopicTitle());
                 preparedStatement.setInt(2, obj.getTopicParentID());
-                preparedStatement.setBoolean(3, obj.isTopicStatus());
+                preparedStatement.setBoolean(3, obj.getTopicStatus());
                 preparedStatement.setInt(4, obj.getTopicID());
                 preparedStatement.executeUpdate();
             }

@@ -20,6 +20,10 @@ public class Topic {
         this.topicStatus = topicStatus;
     }
 
+    public boolean getTopicStatus() {
+        return topicStatus;
+    }
+
     //Sub element
     private int num_easy;
     private int num_medium;
