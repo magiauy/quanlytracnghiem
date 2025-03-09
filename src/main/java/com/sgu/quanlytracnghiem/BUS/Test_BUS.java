@@ -35,9 +35,6 @@ public class Test_BUS implements CRUD<Test> {
                     test.setTestDate(obj.getTestDate());
                     test.setTestStatus(obj.getTestStatus());
                     test.setTestLimit(obj.getTestLimit());
-                    test.setNum_easy(obj.getNum_easy());
-                    test.setNum_medium(obj.getNum_medium());
-                    test.setNum_diff(obj.getNum_diff());
                     test.setTopics(obj.getTopics());
                     return true;
                 }

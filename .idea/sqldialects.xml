@@ -2,6 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/java/com/sgu/quanlytracnghiem/DAO/Question_DAO.java" dialect="MariaDB" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/sgu/quanlytracnghiem/DAO/ResultDAO.java" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/sgu/quanlytracnghiem/DAO/Topic_DAO.java" dialect="MariaDB" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/sgu/quanlytracnghiem/DAO/User_DAO.java" dialect="MariaDB" />
   </component>

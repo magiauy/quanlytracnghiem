@@ -1,9 +1,12 @@
 package com.sgu.quanlytracnghiem.GUI;
 
+import com.sgu.quanlytracnghiem.DTO.Topic;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import lombok.NonNull;
+
+import java.util.ArrayList;
 
 
 public class TestItem {
@@ -34,6 +37,7 @@ public class TestItem {
     int num_easy;
     int num_medium;
     int num_diff;
+    ArrayList<Topic> topics;
 
     @FXML
     public void initialize() {
@@ -42,6 +46,15 @@ public class TestItem {
         lblLimit.setText(String.valueOf(testLimit));
         lblDate.setText(testDate.toString());
         lblStatus.setText(testStatus ? "Đã mở" : "Chưa mở");
+        lblStatus.setStyle(testStatus ? "-fx-text-fill: green" : "-fx-text-fill: red");
+
+        for (Topic topic : topics) {
+            num_easy += topic.getNum_easy();
+            num_medium += topic.getNum_medium();
+            num_diff += topic.getNum_diff();
+        }
+
+
         lblEasy.setText(String.valueOf(num_easy));
         lblMedium.setText(String.valueOf(num_medium));
         lblDiff.setText(String.valueOf(num_diff));
@@ -53,8 +66,6 @@ public class TestItem {
         this.testLimit = test.getTestLimit();
         this.testDate = test.getTestDate();
         this.testStatus = test.getTestStatus();
-        this.num_easy = test.getNum_easy();
-        this.num_medium = test.getNum_medium();
-        this.num_diff = test.getNum_diff();
+        this.topics = test.getTopics();
     }
 }

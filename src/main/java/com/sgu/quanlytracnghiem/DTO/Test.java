@@ -13,11 +13,9 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class Test {
     private int testID;
+    private String testCode;
     private String testTitle;
     private int testTime;
-    private int num_easy;
-    private int num_medium;
-    private int num_diff;
     private int testLimit;
     private LocalDate testDate;
     private boolean testStatus;
