@@ -6,4 +6,6 @@ public interface IAuth_DAO {
     boolean checkLogin(String email, String password);
 
     User getUser(String email);
+
+    boolean updatePassword(String email, String password);
 }

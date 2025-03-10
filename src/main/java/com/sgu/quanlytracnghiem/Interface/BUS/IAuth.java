@@ -6,4 +6,6 @@ public interface IAuth {
     boolean login(String email, String password);
 
     User getUser(String email);
+
+    boolean changePassword(String email, String password, String newPassword);
 }

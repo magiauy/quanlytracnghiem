@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +35,11 @@ public class Main {
     private Label lblUsername;
 
     @FXML
+    private ImageView ivLogo;
+    @FXML
+    private ImageView ivLogout;
+
+    @FXML
     Pane pane;
 
     private final Map<Button,String> buttonMap = new java.util.HashMap<>();
@@ -51,17 +57,26 @@ public class Main {
     buttonEvent(btnExam, btnResult, btnQuestion, btnInfo, btnTest, btnUser, btnStatistic);
     loadFXML("UserHome.fxml");
 
+    ivLogo.setOnMouseClicked(e -> loadFXML("UserHome.fxml"));
+//    ivLogout.setOnMouseClicked(e -> loadFXML("UserHome.fxml"));
 }
 
    public void formatButton(Button ... buttons){
     String hover = "-fx-background-color: #28a4ff; -fx-border-color: black; -fx-border-width: 0 0 1 0;";
     String normal = "-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 0 0 1 0";
 
+    String firstHover = "-fx-background-color: #28a4ff; -fx-border-color: black; -fx-border-width: 1 0 1 0";
+    String firstNormal = "-fx-background-color: #28a4ff; -fx-border-color: black; -fx-border-width: 1 0 1 0";
 
         for(Button button : buttons){
             if (button != null) {
-                button.setOnMouseEntered(e -> button.setStyle(hover));
-                button.setOnMouseExited(e -> button.setStyle(normal));
+                if (button==btnExam){
+                    button.setOnMouseEntered(e -> button.setStyle(firstHover));
+                    button.setOnMouseExited(e -> button.setStyle(firstNormal));
+                }else {
+                    button.setOnMouseEntered(e -> button.setStyle(hover));
+                    button.setOnMouseExited(e -> button.setStyle(normal));
+                }
             } else {
                 System.out.println("Button is null");
             }
@@ -122,9 +137,13 @@ public class Main {
                 b.setOnMouseEntered(null);
                 b.setOnMouseExited(null);
             }else {
-                b.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 0 0 1 0");
+                if (b==btnExam) {
+                    b.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 1 0 1 0");
+                }
+                else {
+                    b.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 0 0 1 0");
+                }
                 formatButton(b);
-
             }
         }
 

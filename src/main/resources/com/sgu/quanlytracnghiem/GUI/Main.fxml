@@ -87,7 +87,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Label>
-            <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="9.0" layoutY="673.0">
+            <ImageView fx:id="ivLogout" fitHeight="39.0" fitWidth="43.0" layoutX="9.0" layoutY="673.0">
                <image>
                   <Image url="@../../../../icon/logout.256x256.png" />
                </image>
@@ -95,10 +95,13 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
-            <ImageView fitHeight="170.0" fitWidth="170.0" layoutX="14.0" layoutY="6.0" mouseTransparent="true" smooth="false">
+            <ImageView fx:id="ivLogo" fitHeight="170.0" fitWidth="170.0" layoutX="14.0" layoutY="6.0" mouseTransparent="true" smooth="false">
                <image>
                   <Image url="@../../../../logo.5e946967e23bac92e8ec.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
          </children>
       </Pane>

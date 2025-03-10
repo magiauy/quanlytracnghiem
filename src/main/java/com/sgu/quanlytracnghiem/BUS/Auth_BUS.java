@@ -15,4 +15,12 @@ public class Auth_BUS implements IAuth {
         return user_dao.getUser(email);
     }
 
+    public boolean changePassword(String email, String password, String newPassword) {
+        if (user_dao.checkLogin(email, password)) {
+            return user_dao.updatePassword(email, newPassword);
+        } else {
+            return false;
+        }
+    }
+
 }

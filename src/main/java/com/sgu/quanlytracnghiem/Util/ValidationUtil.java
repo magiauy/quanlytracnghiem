@@ -230,5 +230,19 @@ public class ValidationUtil {
         return false;
     }
 
+    public static boolean isValidPassword(TextField txtPassword) {
+        if (txtPassword.getText().length() < 6) {
+            showErrorAlert("Mật khẩu phải có ít nhất 6 ký tự");
+            txtPassword.requestFocus();
+            return false;
+        }
+        //Ít nhất 1 ký tự đặt biệt , 1 ký tự hoa và 1 ký tự số
+        if (!txtPassword.getText().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,}$")) {
+            showErrorAlert("Mật khẩu phải chứa ít nhất 1 ký tự số, 1 ký tự hoa, 1 ký tự đặt biệt");
+            txtPassword.requestFocus();
+            return false;
+        }
+        return true;
+    }
 
 }

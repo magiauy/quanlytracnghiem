@@ -16,17 +16,16 @@ import java.io.IOException;
 
 @Slf4j
 public class UI_Util {
-    public static void openStage(String fxmlFile,Runnable onCloseCallback) {
+    public static void openStage(String title,String fxmlFile,Runnable onCloseCallback) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource(fxmlFile));
             Parent root = loader.load();
             AnchorPane anchorPane = (AnchorPane) root;
             Stage stage = new Stage();
-            stage.setTitle("Your Dialog Title"); // Set an appropriate title
+            stage.setTitle(title); // Set an appropriate title
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setOnHidden(event -> onCloseCallback.run());// Set the onCloseCallback
-            stage.getIcons().add(new javafx.scene.image.Image("img/logo.png"));
             stage.setScene(new Scene(anchorPane));
 
             stage.showAndWait(); // Display the stage
