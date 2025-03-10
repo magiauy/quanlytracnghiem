@@ -66,7 +66,7 @@ public class Main {
     String normal = "-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 0 0 1 0";
 
     String firstHover = "-fx-background-color: #28a4ff; -fx-border-color: black; -fx-border-width: 1 0 1 0";
-    String firstNormal = "-fx-background-color: #28a4ff; -fx-border-color: black; -fx-border-width: 1 0 1 0";
+    String firstNormal = "-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 1 0 1 0";
 
         for(Button button : buttons){
             if (button != null) {
