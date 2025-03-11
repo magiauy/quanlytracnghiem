@@ -36,11 +36,11 @@ CREATE TABLE IF NOT EXISTS `answers` (
 
 -- Dumping structure for table quanlythitracnghiem.exam
 CREATE TABLE IF NOT EXISTS `exam` (
-  `exID` int(11) NOT NULL AUTO_INCREMENT,
+  `exCode` varchar(50) NOT NULL DEFAULT 'AUTO_INCREMENT',
   `testID` int(11) DEFAULT NULL,
   `exOrder` varchar(1) DEFAULT NULL,
   `ex_Questions` text DEFAULT NULL,
-  PRIMARY KEY (`exID`) USING BTREE,
+  PRIMARY KEY (`exCode`) USING BTREE,
   KEY `testID` (`testID`),
   CONSTRAINT `FK_exam_test` FOREIGN KEY (`testID`) REFERENCES `test` (`testID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -51,13 +51,13 @@ CREATE TABLE IF NOT EXISTS `exam` (
 CREATE TABLE IF NOT EXISTS `logs` (
   `logsID` int(11) NOT NULL AUTO_INCREMENT,
   `logUserID` int(11) DEFAULT NULL,
-  `logExID` int(11) DEFAULT NULL,
+  `logExID` varchar(50) DEFAULT NULL,
   `logContent` text DEFAULT NULL,
   `logDate` date DEFAULT NULL,
   PRIMARY KEY (`logsID`),
   KEY `logUserID` (`logUserID`),
   KEY `logExID` (`logExID`),
-  CONSTRAINT `FK_logs_exam` FOREIGN KEY (`logExID`) REFERENCES `exam` (`exID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_logs_exam` FOREIGN KEY (`logExID`) REFERENCES `exam` (`exCode`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_logs_user` FOREIGN KEY (`logUserID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -81,15 +81,15 @@ CREATE TABLE IF NOT EXISTS `question` (
 -- Dumping structure for table quanlythitracnghiem.result
 CREATE TABLE IF NOT EXISTS `result` (
   `rsID` int(11) NOT NULL AUTO_INCREMENT,
-  `exID` int(11) DEFAULT NULL,
+  `exID` varchar(50) DEFAULT NULL,
   `userID` int(11) DEFAULT NULL,
   `rsAnswers` text DEFAULT NULL,
-  `rsMark` int(11) DEFAULT NULL,
-  `rsDate` int(11) DEFAULT NULL,
+  `rsMark` decimal(20,6) DEFAULT NULL,
+  `rsDate` date DEFAULT NULL,
   PRIMARY KEY (`rsID`),
   KEY `exID` (`exID`),
   KEY `userID` (`userID`),
-  CONSTRAINT `FK_result_exam` FOREIGN KEY (`exID`) REFERENCES `exam` (`exID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_result_exam` FOREIGN KEY (`exID`) REFERENCES `exam` (`exCode`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_result_user` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -98,15 +98,14 @@ CREATE TABLE IF NOT EXISTS `result` (
 -- Dumping structure for table quanlythitracnghiem.test
 CREATE TABLE IF NOT EXISTS `test` (
   `testID` int(11) NOT NULL AUTO_INCREMENT,
+  `testCode` varchar(45) NOT NULL DEFAULT '0',
   `testTitle` text DEFAULT NULL,
   `testTime` int(11) DEFAULT NULL,
-  `num_easy` int(11) DEFAULT NULL,
-  `num_medium` int(11) DEFAULT NULL,
-  `num_diff` int(11) DEFAULT NULL,
   `testLimit` tinyint(4) DEFAULT NULL,
   `testDate` date DEFAULT NULL,
   `testStatus` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`testID`)
+  PRIMARY KEY (`testID`),
+  UNIQUE KEY `testCode` (`testCode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table quanlythitracnghiem.test: ~0 rows (approximately)
@@ -115,6 +114,9 @@ CREATE TABLE IF NOT EXISTS `test` (
 CREATE TABLE IF NOT EXISTS `test_topic` (
   `testID` int(11) NOT NULL,
   `tpID` int(11) NOT NULL,
+  `num_easy` int(11) NOT NULL,
+  `num_medium` int(11) NOT NULL,
+  `num_diff` int(11) NOT NULL,
   PRIMARY KEY (`testID`,`tpID`),
   KEY `testID` (`testID`),
   KEY `tpID` (`tpID`),
@@ -144,9 +146,12 @@ CREATE TABLE IF NOT EXISTS `user` (
   `userFullName` varchar(40) DEFAULT NULL,
   `isAdmin` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table quanlythitracnghiem.user: ~0 rows (approximately)
+-- Dumping data for table quanlythitracnghiem.user: ~2 rows (approximately)
+INSERT IGNORE INTO `user` (`userID`, `userName`, `userEmail`, `userPassword`, `userFullName`, `isAdmin`) VALUES
+	(1, 'admin2', 'admin@gmail.com', '$2a$12$MjX5vOd3QijcK2u0UXwU2uNQqORV6KYKo3eM65dS2HALzVAlNHz0u', 'admin', 1),
+	(3, 'admin', 'admin', '$2a$12$8kcvxDoyrprCP8QTXE9FiOaZImnh7o1ezWkSq06zxLxOHDbuJuoMO', 'adminE', 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
