@@ -1,11 +1,13 @@
 package com.sgu.quanlytracnghiem.DAO;
 
 import com.sgu.quanlytracnghiem.DTO.Question;
+import com.sgu.quanlytracnghiem.DTO.QuestionLevel;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 @Slf4j
@@ -138,11 +140,32 @@ public class Question_DAO implements GenericDAO<Question> {
             String sql = "SELECT * FROM question";
             try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.executeQuery();
+                ResultSet resultSet = preparedStatement.getResultSet();
+                while (resultSet.next()) {
+                    Question question = new Question();
+                    question.setQuestionID(resultSet.getInt("qID"));
+                    question.setQuestionContent(resultSet.getString("qContent"));
+                    question.setQuestionPicture(resultSet.getString("qPictures"));
+                    question.setTopicID(resultSet.getInt("qTopicID"));
+                    question.setQuestionLevel(getQuestionLevel(resultSet.getString("qLevel")));
+                    question.setQuestionStatus(resultSet.getInt("qStatus") == 1);
+                    questions.add(question);
+                }
+
             }
         }
         catch (Exception e) {
             log.error("Failed to get all questions: ", e);
         }
         return questions;
+    }
+
+    public QuestionLevel getQuestionLevel(String level) {
+        return switch (level) {
+            case "easy" -> QuestionLevel.EASY;
+            case "medium" -> QuestionLevel.MEDIUM;
+            case "diff" -> QuestionLevel.DIFFICULT;
+            default -> null;
+        };
     }
 }

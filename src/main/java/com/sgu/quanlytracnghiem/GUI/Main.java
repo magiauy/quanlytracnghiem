@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,7 @@ public class Main {
     private ImageView ivLogout;
 
     @FXML
-    Pane pane;
+    ScrollPane pane;
 
     private final Map<Button,String> buttonMap = new java.util.HashMap<>();
 
@@ -109,8 +110,8 @@ public class Main {
             if (button != null) {
                 button.setOnAction(e -> {
                     try {
-                        pane.getChildren().clear();
-                        pane.getChildren().add(FXMLLoader.load(Objects.requireNonNull(getClass().getResource(buttonMap.get(button)))));
+
+                        pane.setContent(FXMLLoader.load(Objects.requireNonNull(getClass().getResource(buttonMap.get(button)))));
                         buttonClick(button);
                     }
                     catch (IOException ex) {
@@ -157,9 +158,9 @@ public class Main {
             loader.setLocation(getClass().getResource(fxmlFile));
             // Load the FXML content
             Pane newContent = loader.load();
-            // Clear the main pane and add the new content
-            pane.getChildren().clear();
-            pane.getChildren().add(newContent);
+            // Clear the main ScrollPane and add the new content
+
+            pane.setContent(newContent);
         } catch (IOException e) {
             log.error("Error: ", e);
         }catch (ClassCastException e) {

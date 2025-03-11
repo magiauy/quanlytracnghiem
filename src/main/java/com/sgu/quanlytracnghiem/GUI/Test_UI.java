@@ -4,13 +4,20 @@ import com.sgu.quanlytracnghiem.DTO.Test;
 import com.sgu.quanlytracnghiem.DTO.Topic;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
+
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 @Slf4j
@@ -22,13 +29,23 @@ public class Test_UI {
     @FXML
     private Button btnSearch;
     @FXML
-    private Image imaAdd;
+    private ImageView imgAdd;
+
+    @Getter
+    @Setter
+    static boolean isEditable = false;
+
+    @FXML
+    AnchorPane anchorPane;
 
     @FXML
     public void initialize() {
         test();
         //Tăng khoảng cách giữa các Vbox
         vbox.setSpacing(10);
+
+
+        imgAdd.setOnMouseClicked(event -> {openStage("AboutTest.fxml");});
     }
 
     //Is selected
@@ -116,4 +133,17 @@ public class Test_UI {
         }
     }
 
+    public void openStage(String fxmlFile) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Test_UI.class.getResource(fxmlFile));
+            //Thay pane hiện tại bằng pane mới
+            Pane root = loader.load();
+            anchorPane.getChildren().clear();
+            anchorPane.getChildren().add(root);
+        } catch (IOException e) {
+            log.error("Error", e);
+
+        }
+    }
 }

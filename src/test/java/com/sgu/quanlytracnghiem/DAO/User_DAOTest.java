@@ -1,6 +1,7 @@
 package com.sgu.quanlytracnghiem.DAO;
 
 import com.sgu.quanlytracnghiem.DTO.User;
+import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ class User_DAOTest {
 //        User user = new User(2, "admin", "admin@123", "admin@gmail.com", "admin", true);
         User user = new User(3, "admin", "1", "admin@gmail.com", "admin", true);
 
-        User_DAO user_dao = new User_DAO();
+        GenericDAO<User> user_dao = new User_DAO();
         assertTrue(user_dao.insert(user));
 
     }
