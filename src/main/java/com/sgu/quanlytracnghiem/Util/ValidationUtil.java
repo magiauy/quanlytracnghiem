@@ -36,6 +36,14 @@ public class ValidationUtil {
         }
         return false;
     }
+    public static boolean isEmpty(String key,@NonNull TextField textField) {
+        if (textField.getText().isEmpty()) {
+            showErrorAlert(key+" không được để trống");
+            textField.requestFocus();
+            return true;
+        }
+        return false;
+    }
 
 
     public static boolean isInValidChar(HashMap<TextField, String> textFieldInfo, @NonNull TextField... params) {
@@ -243,6 +251,25 @@ public class ValidationUtil {
             return false;
         }
         return true;
+    }
+
+    public static boolean isAreaEmpty(@NonNull TextArea... params) {
+        for (TextArea param : params) {
+            if (param.getText().isEmpty()) {
+                showErrorAlert("Vui lòng điền đầy đủ thông tin");
+                param.requestFocus();
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean isAreaEmpty(String key,@NonNull TextArea txtArea) {
+        if (txtArea.getText().isEmpty()) {
+            showErrorAlert(key+" không được để trống");
+            txtArea.requestFocus();
+            return true;
+        }
+        return false;
     }
 
 }

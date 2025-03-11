@@ -13,6 +13,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import lombok.Getter;
+import lombok.Setter;
+
+import static com.sgu.quanlytracnghiem.Util.UI_Util.openStage;
 
 public class QuestionUI {
 
@@ -42,15 +46,54 @@ public class QuestionUI {
     @FXML
     TableColumn<Question, String> colQuestionStatus;
 
-    CRUD<Question> questionBUS ;
+    @Getter
+    public static CRUD<Question> questionBUS ;
+
     CRUD<Topic> topicBUS;
 
+    @Getter
+    @Setter
+    private static Question selectedQuestion;
+    @Getter
+    @Setter
+    private static boolean editable = false;
 
     @FXML
     public void initialize() {
         questionBUS = new Question_BUS();
         topicBUS = new Topic_BUS();
         setupTable();
+        imgAdd.setOnMouseClicked(e->{
+            editable = false;
+            openStage("Quản lý câu hỏi","QuestionSubUI.fxml", ()->{
+                System.out.println("RunCallBack");
+                ObservableList<Question> data = FXCollections.observableArrayList(questionBUS.getAll());
+                tblQuestion.setItems(data);
+                tblQuestion.refresh();
+            });
+        });
+
+        imgEdit.setOnMouseClicked(e->{
+            editable = true;
+            if (tblQuestion.getSelectionModel().getSelectedItem() == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Please select a question to edit");
+                alert.showAndWait();
+                return;
+            }
+            selectedQuestion = tblQuestion.getSelectionModel().getSelectedItem();
+            openStage("Quản lý câu hỏi","QuestionSubUI.fxml", ()-> {
+                System.out.println("RunCallBack");
+                editable = false;
+                selectedQuestion = null;
+                ObservableList<Question> data = FXCollections.observableArrayList(questionBUS.getAll());
+                tblQuestion.setItems(data);
+                tblQuestion.refresh();
+            });
+        });
+
+
     }
 
     public void setupTable(){
@@ -61,11 +104,9 @@ public class QuestionUI {
         colQuestionStatus.setCellValueFactory(new PropertyValueFactory<>("questionStatus"));
         ObservableList<Question> data = FXCollections.observableArrayList(questionBUS.getAll());
         tblQuestion.setItems(data);
-        tblQuestion.getSelectionModel().selectedItemProperty().addListener((this::onSelected));
+        tblQuestion.refresh();
 
 
     }
 
-    private void onSelected(Observable observable) {
-    }
 }

@@ -2,29 +2,32 @@ package com.sgu.quanlytracnghiem.DAO;
 
 import com.sgu.quanlytracnghiem.DTO.Answers;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
+import com.sgu.quanlytracnghiem.Interface.DAO.IAnswers_DAO;
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 
-public class Answers_DAO implements GenericDAO<Answers> {
+public class Answers_DAO implements GenericDAO<Answers>, IAnswers_DAO {
     Connection connection = Connect.getInstance().getConnection();
+
 
 
     @Override
     public boolean insert(Answers obj) {
         try {
             connection.setAutoCommit(false);
-            String sql = "INSERT INTO answers (awID,qID, awContent,awPicTures,isRight,awStatus) VALUES (?, ?, ?, ?,?,?)";
+            String sql = "INSERT INTO answers (qID, awContent,awPicTures,isRight,awStatus) VALUES (?, ?, ?, ?,?)";
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setInt(1, obj.getAnswerID());
-                ps.setInt(2, obj.getQuestionID());
-                ps.setString(3, obj.getAnswerContent());
-                ps.setString(4, obj.getAwPicture());
-                ps.setBoolean(5, obj.isAnswerCorrect());
-                ps.setBoolean(6, obj.isAnswerStatus());
+                ps.setInt(1, obj.getQuestionID());
+                ps.setString(2, obj.getAnswerContent());
+                ps.setString(3, obj.getAwPicture());
+                ps.setBoolean(4, obj.isAnswerCorrect());
+                ps.setBoolean(5, obj.isAnswerStatus());
                 ps.executeUpdate();
             }
             connection.commit();
@@ -143,5 +146,63 @@ public class Answers_DAO implements GenericDAO<Answers> {
             log.error("Failed to get all answers: ", e);
         }
         return answers;
+    }
+
+    @Override
+    public boolean deleteMissingAnswers(int questionID, List<Integer> answerIDs) {
+        String sql = "DELETE FROM answers WHERE qID = ? AND awID NOT IN (" +
+                answerIDs.stream().map(id -> "?").collect(Collectors.joining(",")) + ")";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, questionID);
+            for (int i = 0; i < answerIDs.size(); i++) {
+                stmt.setInt(i + 2, answerIDs.get(i)); // Bắt đầu từ vị trí 2
+            }
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            log.error("Failed to delete answers: ", e);
+        }
+        return false;
+    }
+
+    @Override
+    public int insertInt(Answers obj) {
+        //insert xong return về ID đã được AI lên
+        int generatedID = -1; // Mặc định là -1 để kiểm tra lỗi
+        try {
+            connection.setAutoCommit(false);
+            String sql = "INSERT INTO answers (qID, awContent,awPicTures,isRight,awStatus) VALUES (?, ?, ?, ?,?)";
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setInt(1, obj.getQuestionID());
+                ps.setString(2, obj.getAnswerContent());
+                ps.setString(3, obj.getAwPicture());
+                ps.setBoolean(4, obj.isAnswerCorrect());
+                ps.setBoolean(5, obj.isAnswerStatus());
+                int affectedRows = ps.executeUpdate();
+                if (affectedRows > 0) {
+                    // Lấy ID vừa được tạo
+                    try (ResultSet rs = ps.getGeneratedKeys()) {
+                        if (rs.next()) {
+                            generatedID = rs.getInt(1); // Lấy ID mới
+                        }
+                    }
+                }
+            }
+            connection.commit();
+        } catch (Exception e) {
+            log.error("Failed to insert answers: ", e);
+            try {
+                connection.rollback();
+            } catch (Exception ex) {
+                log.error("Failed to rollback: ", ex);
+            }
+
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (Exception e) {
+                log.error("Failed to set auto commit: ", e);
+            }
+        }
+        return generatedID; // Trả về ID mới, nếu thất bại trả về -1
     }
 }
