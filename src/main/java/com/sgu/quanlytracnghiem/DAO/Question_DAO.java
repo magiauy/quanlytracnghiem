@@ -2,17 +2,15 @@ package com.sgu.quanlytracnghiem.DAO;
 
 import com.sgu.quanlytracnghiem.DTO.Question;
 import com.sgu.quanlytracnghiem.DTO.QuestionLevel;
+import com.sgu.quanlytracnghiem.Interface.BUS.IdGenerate;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 @Slf4j
 
-public class Question_DAO implements GenericDAO<Question> {
+public class Question_DAO implements GenericDAO<Question>, IdGenerate {
     Connection connection = Connect.getInstance().getConnection();
     public boolean insert(Question obj) {
         try {
@@ -167,5 +165,16 @@ public class Question_DAO implements GenericDAO<Question> {
             case "diff" -> QuestionLevel.DIFFICULT;
             default -> null;
         };
+    }
+
+    public int generateId() {
+        try {
+            String sql = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'question'";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            return rs.next() ? rs.getInt(1) : -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

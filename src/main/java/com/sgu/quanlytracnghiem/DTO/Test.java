@@ -18,10 +18,19 @@ public class Test {
     private int testTime;
     private int testLimit;
     private LocalDate testDate;
-    private boolean testStatus;
+    private int testStatus;
     private ArrayList<Topic> topics;
 
-    public boolean getTestStatus() {
-        return testStatus;
+
+    public Test (Test test) {
+        this.testID = test.getTestID();
+        this.testCode = test.getTestCode();
+        this.testTitle = test.getTestTitle();
+        this.testTime = test.getTestTime();
+        this.testLimit = test.getTestLimit();
+        this.testDate = test.getTestDate();
+        this.testStatus = test.getTestStatus();
+        this.topics = test.getTopics();
+
     }
 }

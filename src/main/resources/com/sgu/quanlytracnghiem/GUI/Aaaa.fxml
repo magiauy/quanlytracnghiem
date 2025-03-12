@@ -1,84 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-
-    <!-- Tiêu đề chính -->
-    <top>
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sgu.quanlytracnghiem.GUI.ExamItemController">
+    <children>
         <VBox spacing="10">
-            <HBox alignment="CENTER">
-                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Chi tiết câu hỏi" />
-            </HBox>
-            <HBox alignment="CENTER_LEFT" spacing="10">
-                <padding>
-                    <Insets bottom="10" left="10" right="10" top="10" />
-                </padding>
-                <Label text="Chọn độ khó:">
-               <font>
-                  <Font size="16.0" />
-               </font></Label>
-                <ComboBox fx:id="difficultyComboBox" />
-                <Button fx:id="chooseTopicButton" text="Chọn chủ đề" />
-                <Label text="Chủ đề đã chọn:">
-               <font>
-                  <Font size="16.0" />
-               </font></Label>
-                <Label fx:id="selectedTopicLabel" style="-fx-font-weight: bold;" text="Chưa có chủ đề">
-               <font>
-                  <Font size="16.0" />
-               </font></Label>
-            </HBox>
+            <!-- Câu hỏi -->
+            <Label fx:id="questionLabel" maxWidth="600.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Câu1:.....aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" wrapText="true" />
+
+            <!-- Hình ảnh nếu có -->
+            <ImageView fx:id="questionImage" fitHeight="150" fitWidth="250" preserveRatio="true" visible="false" />
+
+            <!-- Pane chứa câu trả lời, sẽ được thêm bằng code Java -->
+            <ScrollPane fx:id="answerPane" fitToWidth="true" prefHeight="200.0" prefWidth="600.0">
+                <content>
+                    <VBox fx:id="answerContainer" spacing="5" />
+                </content>
+            </ScrollPane>
         </VBox>
-    </top>
-
-    <!-- Nội dung chính -->
-    <center>
-        <VBox spacing="10">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-            <Label text="Nhập nội dung câu hỏi:">
-            <font>
-               <Font size="16.0" />
-            </font></Label>
-            <TextArea fx:id="questionContent" prefRowCount="4" />
-            <Label text="Hình ảnh (nếu có):">
-            <font>
-               <Font size="16.0" />
-            </font></Label>
-            <ImageView fx:id="questionImage" fitHeight="150" fitWidth="200" preserveRatio="true" />
-        </VBox>
-    </center>
-
-    <!-- Phần dưới cùng -->
-    <bottom>
-        <VBox spacing="10">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-            <Label text="Thêm câu trả lời:">
-            <font>
-               <Font size="16.0" />
-            </font></Label>
-            <Pane fx:id="answerPane" prefHeight="100" style="-fx-border-color: gray; -fx-border-width: 1;" />
-            <Button fx:id="addAnswerButton" text="Thêm câu trả lời" />
-
-            <!-- Nút OK căn giữa -->
-            <HBox alignment="CENTER">
-                <Button fx:id="okButton" style="-fx-font-size: 14px; -fx-pref-width: 100px;" text="OK" />
-            </HBox>
-        </VBox>
-    </bottom>
-
-</BorderPane>
+    </children>
+</AnchorPane>

@@ -3,14 +3,15 @@ package com.sgu.quanlytracnghiem.BUS;
 import com.sgu.quanlytracnghiem.DAO.Test_DAO;
 import com.sgu.quanlytracnghiem.DTO.Test;
 import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
+import com.sgu.quanlytracnghiem.Interface.BUS.IdGenerate;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 
 import java.util.ArrayList;
 
-public class Test_BUS implements CRUD<Test> {
+public class Test_BUS implements CRUD<Test>, IdGenerate {
     ArrayList<Test> tests ;
     GenericDAO<Test> test_dao = new Test_DAO();
-
+    IdGenerate idGenerate = new Test_DAO();
     public Test_BUS() {
         tests = test_dao.getAll();
     }
@@ -69,5 +70,10 @@ public class Test_BUS implements CRUD<Test> {
     @Override
     public ArrayList<Test> getAll() {
         return tests;
+    }
+
+    @Override
+    public int generateId() {
+        return idGenerate.generateId();
     }
 }

@@ -1,5 +1,7 @@
 package com.sgu.quanlytracnghiem.DTO;
 
+import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
+import javafx.beans.binding.BooleanExpression;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +30,9 @@ public class Topic {
     private int num_easy;
     private int num_medium;
     private int num_diff;
+
+    public int totalNumProperty() {
+        return num_diff+num_easy+num_medium ;
+    }
 
 }
