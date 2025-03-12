@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -8,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="729.0" prefWidth="848.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="729.0" prefWidth="848.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sgu.quanlytracnghiem.GUI.ExamUI">
    <children>
       <Pane prefHeight="89.0" prefWidth="848.0" style="-fx-background-color: #07689f;">
          <children>
@@ -19,15 +21,15 @@
             </Label>
          </children>
       </Pane>
-      <TextField layoutX="611.0" layoutY="106.0" prefHeight="25.0" prefWidth="163.0" />
-      <Button layoutX="774.0" layoutY="106.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Search" />
+      <TextField id="txtSearch" fx:id="txtSearch" layoutX="611.0" layoutY="106.0" prefHeight="25.0" prefWidth="163.0" />
+      <Button id="btnSearch" fx:id="btnSearch" layoutX="774.0" layoutY="106.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Search" />
       <ScrollPane layoutX="14.0" layoutY="148.0" prefHeight="559.0" prefWidth="818.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="564.0" prefWidth="823.0">
+          <AnchorPane fx:id="anchorPaneExams" minHeight="0.0" minWidth="0.0" prefHeight="564.0" prefWidth="823.0">
                <children>
-                  <Pane layoutX="9.0" layoutY="10.0" prefHeight="100.0" prefWidth="785.0" style="-fx-background-radius: 5px; -fx-background-color: #ffffff; -fx-border-color: black; -fx-border-radius: 5px;">
+                  <Pane fx:id="paneExams" layoutX="14.0" layoutY="14.0" prefHeight="100.0" prefWidth="785.0" style="-fx-background-radius: 5px; -fx-background-color: #ffffff; -fx-border-color: black; -fx-border-radius: 5px;">
                      <children>
-                        <Label layoutX="14.0" layoutY="14.0" text="Bài kiểm tra môn ABC">
+                        <Label id="lbExamName1" fx:id="lExamName1" layoutX="14.0" layoutY="14.0" text="Bài kiểm tra môn ABC">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -37,29 +39,49 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="602.0" layoutY="60.0" prefHeight="25.0" prefWidth="109.0" />
-                        <Label layoutX="214.0" layoutY="59.0" text="phút">
+                        <TextField id="txtTrangThai" fx:id="txtTrangThai" layoutX="510.0" layoutY="60.0" prefHeight="25.0" prefWidth="109.0" />
+                        <Label layoutX="197.0" layoutY="59.0" text="phút">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="166.0" layoutY="60.0" prefHeight="25.0" prefWidth="42.0" />
-                        <Label layoutX="293.0" layoutY="59.0" text="Số lần làm bài:">
+                        <TextField id="txtTime" fx:id="txtTime" layoutX="155.0" layoutY="60.0" prefHeight="25.0" prefWidth="42.0" />
+                        <Label layoutX="259.0" layoutY="59.0" text="Số lần làm bài:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="419.0" layoutY="60.0" prefHeight="25.0" prefWidth="42.0" />
-                        <Label layoutX="503.0" layoutY="59.0" text="Trạng thái:">
+                        <TextField id="txtLimit" fx:id="txtLimit" layoutX="375.0" layoutY="60.0" prefHeight="25.0" prefWidth="42.0" />
+                        <Label layoutX="426.0" layoutY="59.0" text="Trạng thái:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
+                        <Button id="btnThi" fx:id="btnThi" layoutX="663.0" layoutY="24.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="54.0" style="-fx-background-color: #3fb97c;" text="Vào thi" textAlignment="CENTER" textFill="#010302">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="OPEN_HAND" />
+                           </cursor>
+                        </Button>
+                        <Button id="btnThi" fx:id="btnWatchResult" layoutX="725.0" layoutY="24.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="54.0" style="-fx-background-color: pink;" text="Xem KQ" textAlignment="CENTER" textFill="#010302">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="OPEN_HAND" />
+                           </cursor>
+                        </Button>
                      </children>
                   </Pane>
                </children>
             </AnchorPane>
         </content>
       </ScrollPane>
+      <ComboBox id="cbTrangThai" fx:id="cbTrangThai" layoutX="86.0" layoutY="106.0" prefWidth="150.0" />
+      <Label layoutX="26.0" layoutY="109.0" prefHeight="18.0" prefWidth="59.0" text="Trạng thái" />
+      <ComboBox id="cbTime" fx:id="cbTime" layoutX="318.0" layoutY="106.0" prefWidth="150.0" />
+      <Label layoutX="258.0" layoutY="109.0" prefHeight="18.0" prefWidth="59.0" text="Thời gian" />
    </children>
 </AnchorPane>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="729.0" prefWidth="848.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sgu.quanlytracnghiem.GUI.ExamUI">
+    <children>
+        <!-- Thanh tiêu đề -->
+        <AnchorPane prefHeight="89.0" prefWidth="848.0" style="-fx-background-color: #07689f;">
+            <children>
+            <Label id="lbExamName2" fx:id="lbExamName2" layoutX="280.0" layoutY="18.0" text="Bài thi: Môn ABC" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+      
+              <!-- Hiển thị điểm -->
+              <Label fx:id="lbDiem" layoutX="627.0" layoutY="28.0" text="Điểm: 9/10">
+                  <font>
+                      <Font size="24.0" />
+                  </font>
+              </Label>
+            </children>
+        </AnchorPane>
+
+        <!-- Hiển thị kết quả từng câu -->
+        <VBox layoutX="20.0" layoutY="160.0" spacing="10">
+            <HBox spacing="10" />
+            <!-- Các câu tiếp theo có thể lặp lại cấu trúc tương tự -->
+        </VBox>
+      <AnchorPane fx:id="achorPaneExam" layoutX="4.0" layoutY="90.0" prefHeight="638.0" prefWidth="581.0" />
+      <AnchorPane fx:id="achorPaneExamQuestion" layoutX="586.0" layoutY="90.0" prefHeight="638.0" prefWidth="266.0" style="-fx-border-color: black;">
+         <children>
+            <Label layoutX="119.0" layoutY="39.0" prefHeight="18.0" prefWidth="44.0" text="Câu hỏi" />
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>
