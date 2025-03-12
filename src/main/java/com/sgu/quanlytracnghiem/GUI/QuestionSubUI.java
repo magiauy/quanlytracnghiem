@@ -23,6 +23,8 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+import static com.sgu.quanlytracnghiem.Util.UI_Util.openStage;
+
 public class QuestionSubUI {
 
     @FXML
@@ -51,7 +53,7 @@ public class QuestionSubUI {
     ArrayList<Answers> answers = new ArrayList<>();
     IdGenerate idGenerate ;
     int questionID;
-    int topicID;
+    public static Topic topic;
 
     int i=0;
     @FXML
@@ -65,7 +67,7 @@ public class QuestionSubUI {
         okButton.setOnAction(this::saveQuestion);
         if (QuestionUI.isEditable()){
             questionID = QuestionUI.getSelectedQuestion().getQuestionID();
-            topicID = QuestionUI.getSelectedQuestion().getTopicID();
+            topic = topicCRUD.getByID(String.valueOf(QuestionUI.getSelectedQuestion().getTopicID()));
             answers = answersBUS.getAnswersByQuestionID(QuestionUI.getSelectedQuestion().getQuestionID());
 
             loadQuestion(QuestionUI.getSelectedQuestion());
@@ -73,6 +75,12 @@ public class QuestionSubUI {
             questionID = idGenerate.generateId();
         }
         answerPane.setContent(vBox);
+
+        chooseTopicButton.setOnAction(event->{
+            openStage("Chọn chủ đề","ChoiceTopic.fxml",()->{
+                selectedTopicLabel.setText(topic.getTopicTitle());
+            });
+        });
 
     }
 
@@ -104,14 +112,14 @@ public class QuestionSubUI {
         Question question ;
         if (QuestionUI.isEditable()){
             question = QuestionUI.getSelectedQuestion();
-            question.setTopicID(topicID);
+            question.setTopicID(topic.getTopicID());
 
         }else {
             question = new Question();
             question.setQuestionID(questionID);
             question.setQuestionStatus(true);
         }
-        question.setTopicID(1);
+        question.setTopicID(topic.getTopicID());
         question.setQuestionLevel(difficultyComboBox.getValue());
         question.setQuestionContent(questionContent.getText());
 
@@ -133,7 +141,7 @@ public class QuestionSubUI {
 
     public void loadQuestion(Question question) {
         difficultyComboBox.setValue(question.getQuestionLevel());
-        selectedTopicLabel.setText(topicCRUD.getByID(String.valueOf(topicID)).getTopicTitle());
+        selectedTopicLabel.setText(topic.getTopicTitle());
         questionContent.setText(question.getQuestionContent());
         if (question.getQuestionPicture() != null) {
             Image image = new Image(question.getQuestionPicture());
