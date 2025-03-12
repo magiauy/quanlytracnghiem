@@ -78,6 +78,7 @@ public class QuestionSubUI {
 
         chooseTopicButton.setOnAction(event->{
             openStage("Chọn chủ đề","ChoiceTopic.fxml",()->{
+                topic = ChoiceTopicController.getSelectedTopic();
                 selectedTopicLabel.setText(topic.getTopicTitle());
             });
         });

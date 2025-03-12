@@ -13,6 +13,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
 public class ChoiceTopicController {
     @FXML
@@ -26,6 +28,9 @@ public class ChoiceTopicController {
     @FXML
     public Button btnOK;
     CRUD<Topic> topicBUS;
+    @Getter
+    @Setter
+    public static Topic selectedTopic;
     @FXML
     public void initialize() {
         topicBUS = new Topic_BUS();
@@ -37,7 +42,7 @@ public class ChoiceTopicController {
 
         btnOK.setOnAction(event->{
             if (topicTable.getSelectionModel().getSelectedItem() != null) {
-                QuestionSubUI.topic = topicTable.getSelectionModel().getSelectedItem();
+                selectedTopic = topicTable.getSelectionModel().getSelectedItem();
                 ((Stage)btnOK.getScene().getWindow()).close();
             }else {
                 ValidationUtil.showErrorAlert("Please choose a topic");
