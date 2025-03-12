@@ -23,7 +23,7 @@
                <HBox alignment="CENTER">
                   <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Chi tiết câu hỏi" />
                </HBox>
-               <HBox alignment="CENTER_LEFT" spacing="10">
+               <HBox spacing="10">
                   <padding>
                      <Insets bottom="10" left="10" right="10" top="10" />
                   </padding>
@@ -34,16 +34,20 @@
                   </Label>
                   <ComboBox fx:id="difficultyComboBox" promptText="Độ khó" />
                   <Button fx:id="chooseTopicButton" text="Chọn chủ đề" />
-                  <Label text="Chủ đề đã chọn:">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="selectedTopicLabel" style="-fx-font-weight: bold;" text="Chưa có chủ đề">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
+                  <VBox maxHeight="1.7976931348623157E308" prefHeight="50.0" prefWidth="203.0">
+                     <children>
+                        <Label text="Chủ đề đã chọn:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="selectedTopicLabel" maxWidth="203.0" style="-fx-font-weight: bold;" text="Chưa có chủ đề" wrapText="true">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </HBox>
             </VBox>
          </top>

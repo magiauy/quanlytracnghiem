@@ -37,104 +37,132 @@
             <Font name="System Bold" size="38.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="153.0" text="Mã đề thi:">
-         <font>
-            <Font size="33.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtTestCode" layoutX="172.0" layoutY="158.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
-      <DatePicker fx:id="dpDate" layoutX="590.0" layoutY="162.0" prefHeight="39.0" prefWidth="224.0" />
-      <Label layoutX="435.0" layoutY="153.0" text="Ngày thi:">
-         <font>
-            <Font size="33.0" />
-         </font>
-      </Label>
-      <Label layoutX="14.0" layoutY="210.0" text="Số lần:">
-         <font>
-            <Font size="33.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtLimit" layoutX="172.0" layoutY="215.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
-      <Label layoutX="435.0" layoutY="210.0" text="Thời gian:">
-         <font>
-            <Font size="33.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtTime" layoutX="590.0" layoutY="219.0" prefHeight="39.0" prefWidth="172.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
-      <Label layoutX="765.0" layoutY="221.0" text="Phút">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
       <Label fx:id="lblTestID" layoutX="235.0" layoutY="98.0" text="XXXX">
          <font>
             <Font name="System Bold" size="38.0" />
          </font>
       </Label>
-      <TableView fx:id="tableTopic" editable="true" layoutX="21.0" layoutY="337.0" prefHeight="290.0" prefWidth="805.0">
-        <columns>
-          <TableColumn fx:id="colTopicId" prefWidth="75.0" text="Mã đề tài" />
-          <TableColumn fx:id="colTopicName" prefWidth="332.0" text="Tên đề tài" />
+
+      <Label layoutX="14.0" layoutY="201.0" text="Mã đề thi:">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtTestCode" layoutX="172.0" layoutY="206.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+
+      <Label layoutX="14.0" layoutY="153.0" text="Tiêu đề:">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtTitle" layoutX="172.0" layoutY="158.0" prefWidth="642.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+
+      <Label layoutX="14.0" layoutY="250.0" text="Số lần:">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtLimit" layoutX="172.0" layoutY="255.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+
+      <Label layoutX="435.0" layoutY="250.0" text="Thời gian:">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtTime" layoutX="590.0" layoutY="259.0" prefHeight="39.0" prefWidth="172.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label layoutX="765.0" layoutY="261.0" text="Phút">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+
+      <Label layoutX="435.0" layoutY="201.0" text="Ngày thi:">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dpDate" layoutX="590.0" layoutY="210.0" prefHeight="39.0" prefWidth="224.0" />
+
+      <Label layoutX="277.0" layoutY="311.0" text="Đề tài của đề thi">
+         <font>
+            <Font name="System Bold" size="38.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableTopic" editable="true" layoutX="21.0" layoutY="368.0" prefHeight="272.0" prefWidth="805.0">
+         <columns>
+            <TableColumn fx:id="colTopicId" prefWidth="75.0" text="Mã đề tài" />
+            <TableColumn fx:id="colTopicName" prefWidth="332.0" text="Tên đề tài" />
             <TableColumn fx:id="colNumEasy" prefWidth="99.0" text="Số câu dễ" />
             <TableColumn fx:id="colNumMedium" prefWidth="128.0" text="Số câu trung bình" />
             <TableColumn fx:id="colNumDiff" minWidth="5.0" prefWidth="90.0" text="Số câu khó" />
             <TableColumn fx:id="colTotalNum" prefWidth="75.0" text="Tổng số câu" />
-        </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
+         </columns>
       </TableView>
-      <Label layoutX="277.0" layoutY="271.0" text="Đề tài của đề thi">
-         <font>
-            <Font name="System Bold" size="38.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnGenerate" layoutX="431.0" layoutY="641.0" mnemonicParsing="false" text="Tạo bài thi">
+
+      <Button fx:id="btnSave" layoutX="134.0" layoutY="649.0" mnemonicParsing="false" text="Lưu nháp">
          <font>
             <Font name="System Bold" size="31.0" />
          </font>
       </Button>
-      <Button fx:id="btnSave" layoutX="242.0" layoutY="641.0" mnemonicParsing="false" text="Lưu nháp">
+      <Button fx:id="btnGenerate" layoutX="323.0" layoutY="649.0" mnemonicParsing="false" text="Tạo bài thi">
          <font>
             <Font name="System Bold" size="31.0" />
          </font>
       </Button>
-      <Label layoutX="414.0" layoutY="98.0" text="Trạng thái:">
-         <font>
-            <Font name="System Bold" size="38.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblStatus" layoutX="609.0" layoutY="98.0" text="Đã mở">
-         <font>
-            <Font name="System Bold" size="38.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="imgAdd" fitHeight="48.0" fitWidth="48.0" layoutX="776.0" layoutY="278.0">
+      <ImageView fx:id="imgAdd" fitHeight="48.0" fitWidth="48.0" layoutX="776.0" layoutY="315.0">
          <image>
             <Image url="@../../../../icon/Plus.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
-      <ImageView fx:id="imgDelete" fitHeight="48.0" fitWidth="48.0" layoutX="676.0" layoutY="278.0">
+      <ImageView fx:id="imgDelete" fitHeight="48.0" fitWidth="48.0" layoutX="676.0" layoutY="315.0">
          <image>
             <Image url="@../../../../icon/Trash.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
-      <ImageView fx:id="imgEdit" fitHeight="48.0" fitWidth="48.0" layoutX="725.0" layoutY="278.0">
+      <ImageView fx:id="imgEdit" fitHeight="48.0" fitWidth="48.0" layoutX="725.0" layoutY="315.0">
          <image>
             <Image url="@../../../../icon/Edit.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
+      <Label layoutX="434.0" layoutY="98.0" text="Trạng thái:">
+         <font>
+            <Font name="System Bold" size="38.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblStatus" layoutX="629.0" layoutY="98.0" text="Đã mở">
+         <font>
+            <Font name="System Bold" size="38.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnViewExam" layoutX="528.0" layoutY="649.0" mnemonicParsing="false" text="Xem bài thi">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

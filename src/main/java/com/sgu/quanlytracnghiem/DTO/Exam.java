@@ -11,8 +11,8 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Exam {
-    private int examID;
-    private int testID;
+    private String examID;
+    private String testID;
     private String examOrder;
     private ArrayList<Question> questions;
 }

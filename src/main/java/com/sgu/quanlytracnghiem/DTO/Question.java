@@ -17,5 +17,8 @@ public class Question {
     private QuestionLevel questionLevel;
     private boolean questionStatus;
 
+    public String toString() {
+        return String.valueOf(questionID);
+    }
 
 }

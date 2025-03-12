@@ -22,12 +22,12 @@ public class Exam_DAO implements GenericDAO<Exam> {
         try {
             connection.setAutoCommit(false);
 
-            String sql = "INSERT INTO exam (exCode, testID, exOrder, ex_Questions) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO exam (exCode, testCode, exOrder, ex_Questions) VALUES (?, ?, ?, ?)";
 
             try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setInt(1, obj.getExamID());
-                preparedStatement.setInt(2, obj.getTestID());
-                preparedStatement.setInt(3, obj.getTestID());
+                preparedStatement.setString(1, obj.getExamID());
+                preparedStatement.setString(2, obj.getTestID());
+                preparedStatement.setString(3, obj.getExamOrder());
                 preparedStatement.setString(4, getQuestionArr(obj.getQuestions()));
                 preparedStatement.executeUpdate();
             }
@@ -55,13 +55,13 @@ public class Exam_DAO implements GenericDAO<Exam> {
         public boolean update(Exam obj) {
             try {
                 connection.setAutoCommit(false);
-                String sql = "UPDATE exam SET exCode = ?, testID = ?, exOrder = ?, ex_Questions = ? WHERE exID = ?";
+                String sql = "UPDATE exam SET exCode = ?, testCode = ?, exOrder = ?, ex_Questions = ? WHERE exID = ?";
                 try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                    preparedStatement.setInt(1, obj.getExamID());
-                    preparedStatement.setInt(2, obj.getTestID());
-                    preparedStatement.setInt(3, obj.getTestID());
+                    preparedStatement.setString(1, obj.getExamID());
+                    preparedStatement.setString(2, obj.getTestID());
+                    preparedStatement.setString(3, obj.getExamOrder());
                     preparedStatement.setString(4, getQuestionArr(obj.getQuestions()));
-                    preparedStatement.setInt(5, obj.getExamID());
+                    preparedStatement.setString(5, obj.getExamID());
                     preparedStatement.executeUpdate();
                 }
                 connection.commit();
@@ -89,7 +89,7 @@ public class Exam_DAO implements GenericDAO<Exam> {
         public boolean delete(String id) {
             try {
                 connection.setAutoCommit(false);
-                String sql = "DELETE FROM exam WHERE exID = ?";
+                String sql = "DELETE FROM exam WHERE exCode = ?";
                 try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                     preparedStatement.setString(1, id);
                     preparedStatement.executeUpdate();
@@ -118,13 +118,13 @@ public class Exam_DAO implements GenericDAO<Exam> {
         public Exam getById(String id) {
         Exam exam = new Exam();
         try {
-            String sql = "SELECT * FROM exam WHERE exID = ?";
+            String sql = "SELECT * FROM exam WHERE exCode = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, id);
                 preparedStatement.executeQuery();
                 while (preparedStatement.getResultSet().next()) {
-                    exam.setExamID(preparedStatement.getResultSet().getInt("exID"));
-                    exam.setTestID(preparedStatement.getResultSet().getInt("testID"));
+                    exam.setExamID(preparedStatement.getResultSet().getString("exCode"));
+                    exam.setTestID(preparedStatement.getResultSet().getString("testCode"));
                     exam.setExamOrder(preparedStatement.getResultSet().getString("exOrder"));
                     exam.setQuestions(getQuestionList(preparedStatement.getResultSet().getString("ex_Questions")));
                 }
@@ -145,8 +145,8 @@ public class Exam_DAO implements GenericDAO<Exam> {
                 preparedStatement.executeQuery();
                 while (preparedStatement.getResultSet().next()) {
                     Exam exam = new Exam();
-                    exam.setExamID(preparedStatement.getResultSet().getInt("exID"));
-                    exam.setTestID(preparedStatement.getResultSet().getInt("testID"));
+                    exam.setExamID(preparedStatement.getResultSet().getString("exCode"));
+                    exam.setTestID(preparedStatement.getResultSet().getString("testCode"));
                     exam.setExamOrder(preparedStatement.getResultSet().getString("exOrder"));
                     exam.setQuestions(getQuestionList(preparedStatement.getResultSet().getString("ex_Questions")));
                     exams.add(exam);
@@ -173,4 +173,5 @@ public class Exam_DAO implements GenericDAO<Exam> {
             }
             return questionList;
         }
+
 }

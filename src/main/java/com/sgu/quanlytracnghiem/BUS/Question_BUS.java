@@ -8,10 +8,11 @@ import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 
 import java.util.ArrayList;
 
-public class Question_BUS implements CRUD<Question> , IdGenerate {
+public class Question_BUS implements CRUD<Question> , IdGenerate ,IQuestion {
 
     ArrayList<Question> questions ;
     GenericDAO<Question> question_dao = new Question_DAO();
+    IdGenerate idGenerate = new Question_DAO();
 
     public Question_BUS() {
         questions = question_dao.getAll();
@@ -76,6 +77,17 @@ public class Question_BUS implements CRUD<Question> , IdGenerate {
 
     @Override
     public int generateId() {
-        return questions.size()+1;
+        return idGenerate.generateId();
+    }
+
+    @Override
+    public ArrayList<Question> getQuestionByTopic(int topicID) {
+        ArrayList<Question> questionByTopic = new ArrayList<>();
+        for (Question question : questions) {
+            if (question.getTopicID() == topicID) {
+                questionByTopic.add(question);
+            }
+        }
+        return questionByTopic;
     }
 }

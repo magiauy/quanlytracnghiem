@@ -1,7 +1,10 @@
 package com.sgu.quanlytracnghiem.GUI;
 
+import com.sgu.quanlytracnghiem.BUS.Test_BUS;
 import com.sgu.quanlytracnghiem.DTO.Test;
 import com.sgu.quanlytracnghiem.DTO.Topic;
+import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
+import com.sgu.quanlytracnghiem.Util.ValidationUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,6 +33,8 @@ public class Test_UI {
     private Button btnSearch;
     @FXML
     private ImageView imgAdd;
+    @FXML
+    private ImageView imgEdit;
 
     @Getter
     @Setter
@@ -38,67 +43,86 @@ public class Test_UI {
     @FXML
     AnchorPane anchorPane;
 
+    @Getter
+    @Setter
+    public static Test testSelected;
+
+    @Getter
+    private static CRUD<Test> testCRUD ;
+
+    ArrayList<Test> testList;
+
     @FXML
     public void initialize() {
-        test();
+        testCRUD = new Test_BUS();
+        testList = testCRUD.getAll();
+        testList.forEach(this::loadTestItem);
+
+
         //Tăng khoảng cách giữa các Vbox
         vbox.setSpacing(10);
 
 
         imgAdd.setOnMouseClicked(event -> {openStage("AboutTest.fxml");});
+        imgEdit.setOnMouseClicked(_ -> {
+            if (testSelected != null) {
+                isEditable = true;
+                openStage("AboutTest.fxml");
+            } else {
+                ValidationUtil.showErrorAlert("Vui lòng chọn bài thi cần sửa");
+            }
+        });
     }
 
     //Is selected
 
 
-    public void test() {
-        ArrayList<Topic> topics = new ArrayList<>();
-        topics.add(new Topic(1, "T001", 0, true));
-        topics.add(new Topic(2, "T002", 0, true));
-        topics.add(new Topic(3, "T003", 0, true));
-        topics.getFirst().setNum_easy(10);
-        topics.getFirst().setNum_medium(10);
-        topics.getFirst().setNum_diff(10);
-
-        topics.get(1).setNum_easy(10);
-        topics.get(1).setNum_medium(10);
-        topics.get(1).setNum_diff(10);
-
-        topics.getLast().setNum_easy(10);
-        topics.getLast().setNum_medium(10);
-        topics.getLast().setNum_diff(10);
-
-
-
-        new Test();
-        Test test = Test.builder()
-                .testID(1)
-                .testCode("T001")
-                .testTitle("Test 1")
-                .testDate(java.time.LocalDate.now())
-                .testLimit(10)
-                .testTime(10)
-                .testStatus(true)
-                .topics(topics)
-
-                .build();
-        loadTestItem(test);
-
-        Test test2 = Test.builder()
-                .testID(2)
-                .testCode("T002")
-                .testTitle("Test 2")
-                .testDate(java.time.LocalDate.now())
-                .testLimit(10)
-                .testTime(10)
-                .testStatus(false)
-                .topics(topics)
-                .build();
-
-        loadTestItem(test2);
-
-
-    }
+//    public void test() {
+//        ArrayList<Topic> topics = new ArrayList<>();
+//        topics.add(new Topic(1, "T001", 0, true));
+//        topics.add(new Topic(2, "T002", 0, true));
+//        topics.add(new Topic(3, "T003", 0, true));
+//        topics.getFirst().setNum_easy(10);
+//        topics.getFirst().setNum_medium(10);
+//        topics.getFirst().setNum_diff(10);
+//
+//        topics.get(1).setNum_easy(10);
+//        topics.get(1).setNum_medium(10);
+//        topics.get(1).setNum_diff(10);
+//
+//        topics.getLast().setNum_easy(10);
+//        topics.getLast().setNum_medium(10);
+//        topics.getLast().setNum_diff(10);
+//
+//
+//
+//        new Test();
+//        Test test = Test.builder()
+//                .testID(1)
+//                .testCode("T001")
+//                .testTitle("Test 1")
+//                .testDate(java.time.LocalDate.now())
+//                .testLimit(10)
+//                .testTime(10)
+//                .testStatus(true)
+//                .topics(topics)
+//
+//                .build();
+//        loadTestItem(test);
+//
+//        Test test2 = Test.builder()
+//                .testID(2)
+//                .testCode("T002")
+//                .testTitle("Test 2")
+//                .testDate(java.time.LocalDate.now())
+//                .testLimit(10)
+//                .testTime(10)
+//                .testStatus(false)
+//                .topics(topics)
+//                .build();
+//
+//        loadTestItem(test2);
+//    }
 
     public void loadTestItem(Test test){
         TestItem testItem = new TestItem(test);
@@ -114,6 +138,7 @@ public class Test_UI {
 
             pane.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, e -> {
                 paneSelected(pane);
+                testSelected = test;
             });
             vbox.getChildren().add(pane);
         } catch (Exception e) {

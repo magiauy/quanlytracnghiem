@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefWidth="362.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
+    <children>
+        <VBox prefWidth="362.0" spacing="10">
+            <!-- Câu hỏi -->
+            <Label fx:id="questionLabel" maxWidth="362.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Câu1:.....aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" wrapText="true" />
+
+            <!-- Hình ảnh nếu có -->
+            <ImageView fx:id="questionImage" fitHeight="150" fitWidth="250" preserveRatio="true" visible="false" />
+
+            <!-- Pane chứa câu trả lời, sẽ được thêm bằng code Java -->
+            <ScrollPane fx:id="answerPane" fitToWidth="true" prefHeight="200.0" prefWidth="600.0">
+                <content>
+                    <VBox fx:id="answerContainer" spacing="5" />
+                </content>
+            </ScrollPane>
+        </VBox>
+    </children>
+</AnchorPane>
