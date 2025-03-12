@@ -5,10 +5,7 @@ import com.sgu.quanlytracnghiem.DTO.Result;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 @Slf4j
@@ -167,6 +164,22 @@ public class Result_DAO implements GenericDAO<Result> {
             answers.add(answers_dao.getById(s));
         }
         return answers;
+    }
+    public String getUsernameById(String id) {
+        String username = null;
+        String sql = "SELECT username FROM user WHERE userID = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                username = rs.getString("username");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Hoặc log.error("Lỗi khi lấy username: ", e);
+        }
+        return username;
     }
 
 }

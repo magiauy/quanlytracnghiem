@@ -1,41 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="729.0" prefWidth="848.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sgu.quanlytracnghiem.GUI.ExamUI">
+<AnchorPane prefHeight="729.0" prefWidth="848.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sgu.quanlytracnghiem.GUI.ResultSub">
     <children>
         <!-- Thanh tiêu đề -->
-        <AnchorPane prefHeight="89.0" prefWidth="848.0" style="-fx-background-color: #07689f;">
+        <AnchorPane fx:id="titlePane" prefHeight="89.0" prefWidth="848.0" style="-fx-background-color: #07689f;">
             <children>
-            <Label id="lbExamName2" fx:id="lbExamName2" layoutX="280.0" layoutY="18.0" text="Bài thi: Môn ABC" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-            </Label>
-      
-              <!-- Hiển thị điểm -->
-              <Label fx:id="lbDiem" layoutX="627.0" layoutY="28.0" text="Điểm: 9/10">
-                  <font>
-                      <Font size="24.0" />
-                  </font>
-              </Label>
+                <Label fx:id="lbExamName2" layoutX="280.0" layoutY="18.0" text="Bài thi: Môn ABC" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="36.0" />
+                    </font>
+                </Label>
+
+                <!-- Hiển thị điểm -->
+                <Label fx:id="lbDiem" layoutX="627.0" layoutY="28.0" text="Điểm: 9/10" textFill="#ff0303">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                    <effect>
+                        <Blend />
+                    </effect>
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                </Label>
             </children>
         </AnchorPane>
 
         <!-- Hiển thị kết quả từng câu -->
-        <VBox layoutX="20.0" layoutY="160.0" spacing="10">
-            <HBox spacing="10" />
+        <VBox fx:id="questionResultVBox" layoutX="20.0" layoutY="160.0" spacing="10">
+            <HBox fx:id="questionHBox" spacing="10" />
             <!-- Các câu tiếp theo có thể lặp lại cấu trúc tương tự -->
         </VBox>
-      <AnchorPane fx:id="achorPaneExam" layoutX="4.0" layoutY="90.0" prefHeight="638.0" prefWidth="581.0" />
-      <AnchorPane fx:id="achorPaneExamQuestion" layoutX="586.0" layoutY="90.0" prefHeight="638.0" prefWidth="266.0" style="-fx-border-color: black;">
-         <children>
-            <Label layoutX="119.0" layoutY="39.0" prefHeight="18.0" prefWidth="44.0" text="Câu hỏi" />
-         </children>
-      </AnchorPane>
+
+        <!-- Thông tin bài thi -->
+        <AnchorPane fx:id="achorPaneExam" layoutX="4.0" layoutY="90.0" prefHeight="73.0" prefWidth="848.0">
+            <children>
+                <Label fx:id="lblUserID" layoutX="14.0" layoutY="27.0" text="Mã thí sinh">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblUserName" layoutX="151.0" layoutY="27.0" text="Tên thí sinh">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblExamID" layoutX="343.0" layoutY="27.0" text="Mã bài thi">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblExamCode" layoutX="507.0" layoutY="27.0" prefHeight="20.0" prefWidth="78.0" text="Mã đề thi">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblExamDate" layoutX="661.0" layoutY="27.0" prefHeight="20.0" prefWidth="69.0" text="Ngày thi">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+
+                <TextField fx:id="txtUserID" layoutX="83.0" layoutY="24.0" prefHeight="25.0" prefWidth="63.0" />
+                <TextField fx:id="txtUserName" layoutX="232.0" layoutY="24.0" prefHeight="25.0" prefWidth="97.0" />
+                <TextField fx:id="txtExamID" layoutX="413.0" layoutY="24.0" prefHeight="25.0" prefWidth="72.0" />
+                <TextField fx:id="txtExamCode" layoutX="573.0" layoutY="23.0" prefHeight="25.0" prefWidth="72.0" />
+                <TextField fx:id="txtExamDate" layoutX="718.0" layoutY="24.0" prefHeight="25.0" prefWidth="97.0" />
+            </children>
+        </AnchorPane>
+
+        <!-- Hiển thị số câu đúng -->
+        <AnchorPane fx:id="achorPaneExamQuestion" layoutY="169.0" prefHeight="559.0" prefWidth="852.0" style="-fx-border-color: black;">
+            <children>
+                <Label fx:id="lblCorrectAnswers" layoutX="31.0" layoutY="14.0" prefHeight="27.0" prefWidth="116.0" text="Số câu đúng">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>

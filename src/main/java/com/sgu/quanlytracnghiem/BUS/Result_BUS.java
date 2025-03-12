@@ -9,12 +9,17 @@ import java.util.ArrayList;
 
 public class Result_BUS implements CRUD<Result> {
     ArrayList<Result> results = new ArrayList<>();
-    GenericDAO<Result> result_dao;
+    static GenericDAO<Result> result_dao;
 
     public Result_BUS() {
         result_dao = new Result_DAO();
         results = result_dao.getAll();
     }
+
+    public static String getUsernameById(String s) {
+        return ((Result_DAO) result_dao).getUsernameById(s);
+    }
+
 
     @Override
     public boolean add(Result obj) {
