@@ -3,6 +3,7 @@ package com.sgu.quanlytracnghiem.GUI;
 import com.sgu.quanlytracnghiem.BUS.Topic_BUS;
 import com.sgu.quanlytracnghiem.DTO.Topic;
 import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
+import com.sgu.quanlytracnghiem.Interface.DAO.ITopic;
 import com.sgu.quanlytracnghiem.Util.ValidationUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,9 @@ import javafx.stage.Stage;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class TestTopicChoiceController {
 
@@ -40,10 +44,14 @@ public class TestTopicChoiceController {
     @Getter
     @Setter
     private static boolean isSaved;
+    ITopic itopic;
 
+    ArrayList<Topic> topics;
     @FXML
     public void initialize() {
         topicBUS = new Topic_BUS();
+        itopic = new Topic_BUS();
+        topics = itopic.getTopicQuestionCounts();
 
         colTpID.setCellValueFactory(new PropertyValueFactory<>("topicID"));
         colTpTitle.setCellValueFactory(new PropertyValueFactory<>("topicTitle"));
@@ -69,10 +77,41 @@ public class TestTopicChoiceController {
                 ValidationUtil.showErrorAlert("Please choose a topic");
             }
         });
+        topicTable.setDisable(AboutTestController.isTopicEditable());
+
+        //add listener to the table
+        topicTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                Optional<Topic> selectedTopic = topics.stream()
+                        .filter(topic -> topic.getTopicID() == newSelection.getTopicID())
+                        .findFirst();
+
+                int numEasy = selectedTopic.map(Topic::getNum_easy).orElse(0); // Nếu không tìm thấy, mặc định là 0
+                int numMedium = selectedTopic.map(Topic::getNum_medium).orElse(0);
+                int numHard = selectedTopic.map(Topic::getNum_diff).orElse(0);
+                if (AboutTestController.isTopicEditable()){
+                    //Select the topic that was selected before
+                    data.add(topicBUS.getByID(String.valueOf(AboutTestController.getTopicSelected().getTopicID())));
+                    topicTable.getSelectionModel().select(topicBUS.getByID(String.valueOf(AboutTestController.getTopicSelected().getTopicID())));
+
+
+                    easySpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, numEasy, AboutTestController.getTopicSelected().getNum_easy()));
+                    mediumSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, numMedium, AboutTestController.getTopicSelected().getNum_medium()));
+                    hardSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, numHard, AboutTestController.getTopicSelected().getNum_diff()));
+                }else {
+                    easySpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, numEasy, 0));
+                    mediumSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, numMedium, 0));
+                    hardSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, numHard, 0));
+                }
+            }
+        });
+
+
+
+
 
         if (AboutTestController.isTopicEditable()){
             //Select the topic that was selected before
-            topicTable.setDisable(true);
             data.add(topicBUS.getByID(String.valueOf(AboutTestController.getTopicSelected().getTopicID())));
             topicTable.getSelectionModel().select(topicBUS.getByID(String.valueOf(AboutTestController.getTopicSelected().getTopicID())));
             easySpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, AboutTestController.getTopicSelected().getNum_easy()));

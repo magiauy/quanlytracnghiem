@@ -4,6 +4,7 @@ import com.sgu.quanlytracnghiem.BUS.Test_BUS;
 import com.sgu.quanlytracnghiem.DTO.Test;
 import com.sgu.quanlytracnghiem.DTO.Topic;
 import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
+import com.sgu.quanlytracnghiem.Util.ValidationUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -63,9 +64,14 @@ public class Test_UI {
 
 
         imgAdd.setOnMouseClicked(event -> {openStage("AboutTest.fxml");});
-        imgEdit.setOnMouseClicked(event -> {
-            isEditable = true;
-            openStage("AboutTest.fxml");});
+        imgEdit.setOnMouseClicked(_ -> {
+            if (testSelected != null) {
+                isEditable = true;
+                openStage("AboutTest.fxml");
+            } else {
+                ValidationUtil.showErrorAlert("Vui lòng chọn bài thi cần sửa");
+            }
+        });
     }
 
     //Is selected

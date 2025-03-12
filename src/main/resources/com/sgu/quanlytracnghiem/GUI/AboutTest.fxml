@@ -159,7 +159,7 @@
             <Font name="System Bold" size="38.0" />
          </font>
       </Label>
-      <Button  layoutX="528.0" layoutY="649.0" mnemonicParsing="false" text="Xem bài thi">
+      <Button fx:id="btnViewExam" layoutX="528.0" layoutY="649.0" mnemonicParsing="false" text="Xem bài thi">
          <font>
             <Font name="System Bold" size="31.0" />
          </font>

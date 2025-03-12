@@ -1,10 +1,12 @@
 package com.sgu.quanlytracnghiem.GUI;
 
+import com.sgu.quanlytracnghiem.BUS.Exam_BUS;
 import com.sgu.quanlytracnghiem.BUS.Test_BUS;
 import com.sgu.quanlytracnghiem.BUS.Topic_BUS;
 import com.sgu.quanlytracnghiem.DTO.Test;
 import com.sgu.quanlytracnghiem.DTO.Topic;
 import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
+import com.sgu.quanlytracnghiem.Interface.BUS.IExam;
 import com.sgu.quanlytracnghiem.Interface.BUS.IdGenerate;
 import com.sgu.quanlytracnghiem.Util.ValidationUtil;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -71,7 +73,8 @@ public class AboutTestController {
     private Button btnSave;
     @FXML
     private Button btnGenerate;
-
+    @FXML
+    private Button btnViewExam;
     @FXML
     private AnchorPane anchorPane;
 
@@ -93,11 +96,13 @@ public class AboutTestController {
     private static Test globalTest;
 
     IdGenerate idGenerate;
+    IExam examBUS;
     @FXML
     public void initialize() {
         topic_Crud = new Topic_BUS();
         status = new HashMap<>();
         topic_list = topic_Crud.getAll();
+        examBUS = new Exam_BUS();
         idGenerate = new Test_BUS();
         status.put(0, "Đã đóng");
         status.put(1, "Đang mở");
@@ -105,6 +110,7 @@ public class AboutTestController {
         status.put(3,"Đã tạo");
         createTable();
         imgBack.setOnMouseClicked(event -> {
+
             openStageLocal("Test.fxml");
         });
 
@@ -116,8 +122,10 @@ public class AboutTestController {
         }
         else {
             globalTest = new Test();
+            globalTest.setTestStatus(2);
             globalTest.setTopics(new ArrayList<>());
             lblTestID.setText(String.valueOf(idGenerate.generateId()));
+
         }
 
         imgAdd.setOnMouseClicked(event -> {
@@ -144,6 +152,7 @@ public class AboutTestController {
                 tableTopic.refresh();
            }
         });
+        loadStatus();
 
         btnSave.setOnMouseClicked(event -> {
             globalTest.setTestLimit(Integer.parseInt(txtLimit.getText()));
@@ -153,18 +162,37 @@ public class AboutTestController {
             globalTest.setTestTitle(txtTitle.getText());
             globalTest.setTestStatus(2);
             if (Test_UI.isEditable()) {
-
-                Test_UI.getTestCRUD().update(globalTest);
+                if (Test_UI.getTestCRUD().update(globalTest)) {
+                    ValidationUtil.showInfoAlert("Cập nhật thành công");
+                } else {
+                    ValidationUtil.showErrorAlert("Cập nhật thất bại");
+                }
             }else {
-                Test_UI.getTestCRUD().add(globalTest);
+                if (Test_UI.getTestCRUD().add(globalTest)){
+                    ValidationUtil.showInfoAlert("Thêm thành công");
+                }else {
+                    ValidationUtil.showErrorAlert("Thêm thất bại");
+                }
             }
         });
         btnGenerate.setOnMouseClicked(event -> {
             if (ValidationUtil.showConfirmAlert("Bạn có chắc muốn tạo đề không")) {
                 globalTest.setTestStatus(3);
                 Test_UI.getTestCRUD().update(globalTest);
+                examBUS.generateExam(globalTest);
+                ValidationUtil.showInfoAlert("Tạo đề thành công");
+                btnSave.setDisable(false);
+                txtTestCode.setDisable(true );
             }
         });
+
+        btnViewExam.setOnAction(event ->{
+
+            openStage("Xem đề thi","AboutExam.fxml",()->{
+
+            });
+        });
+
     }
 
     private void imgEdit() {
@@ -227,4 +255,37 @@ public class AboutTestController {
 
         }
     }
+
+    public void loadStatus(){
+        switch (globalTest.getTestStatus()) {
+            case 0:
+                lblStatus.setText("Đã đóng");
+                lblStatus.setStyle("-fx-text-fill: red");
+                txtTestCode.setDisable(true);
+                txtTime.setDisable(true);
+                txtLimit.setDisable(true);
+                dpDate.setDisable(true);
+                break;
+            case 1:
+                lblStatus.setText("Đang mở");
+                lblStatus.setStyle("-fx-text-fill: green");
+                txtTestCode.setDisable(true);
+                txtTime.setDisable(true);
+                dpDate.setDisable(true);
+                break;
+            case 2:
+                lblStatus.setText("Nháp");
+                lblStatus.setStyle("-fx-text-fill: #FFC107");
+                btnViewExam.setDisable(true);
+                break;
+            case 3:
+                lblStatus.setText("Đã tạo");
+                lblStatus.setStyle("-fx-text-fill: green");
+                txtTestCode.setDisable(true);
+                btnGenerate.setDisable(true);
+                break;
+
+        }
+    }
+
 }

@@ -113,11 +113,21 @@ public class Question_DAO implements GenericDAO<Question>, IdGenerate {
     }
 
     public Question getById(String id) {
+        Question question = new Question();
         try {
             String sql = "SELECT * FROM question WHERE qID = ?";
             try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, id);
                 preparedStatement.executeQuery();
+                ResultSet resultSet = preparedStatement.getResultSet();
+                while (resultSet.next()) {
+                    question.setQuestionID(resultSet.getInt("qID"));
+                    question.setQuestionContent(resultSet.getString("qContent"));
+                    question.setQuestionPicture(resultSet.getString("qPictures"));
+                    question.setTopicID(resultSet.getInt("qTopicID"));
+                    question.setQuestionLevel(getQuestionLevel(resultSet.getString("qLevel")));
+                    question.setQuestionStatus(resultSet.getInt("qStatus") == 1);
+                }
             }
         }
         catch (Exception e) {
@@ -129,7 +139,7 @@ public class Question_DAO implements GenericDAO<Question>, IdGenerate {
                 log.error("Failed to set auto commit: ", e);
             }
         }
-        return null;
+        return question;
     }
 
     public ArrayList<Question> getAll() {

@@ -6,6 +6,7 @@ import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
 import com.sgu.quanlytracnghiem.Interface.BUS.IExam;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -140,8 +141,17 @@ public class Exam_BUS implements CRUD<Exam> , IExam {
         result.addAll(mediumQuestions);
         result.addAll(diffQuestions);
 
-
-
         return result;
+    }
+
+    @Override
+    public ArrayList<Exam> getExamsByTest(String testID) {
+        ArrayList<Exam> examByTest = new ArrayList<>();
+        for (Exam exam : exams) {
+            if (exam.getTestID().equals(testID)) {
+                examByTest.add(exam);
+            }
+        }
+        return examByTest;
     }
 }

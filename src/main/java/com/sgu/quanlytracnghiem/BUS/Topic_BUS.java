@@ -4,12 +4,14 @@ import com.sgu.quanlytracnghiem.DAO.Topic_DAO;
 import com.sgu.quanlytracnghiem.DTO.Topic;
 import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
+import com.sgu.quanlytracnghiem.Interface.DAO.ITopic;
 
 import java.util.ArrayList;
 
-public class Topic_BUS implements CRUD<Topic> {
+public class Topic_BUS implements CRUD<Topic> , ITopic {
     ArrayList<Topic> topics ;
     GenericDAO<Topic> topic_dao;
+    ITopic itopic ;
 
     public Topic_BUS() {
         topic_dao = new Topic_DAO();
@@ -67,5 +69,9 @@ public class Topic_BUS implements CRUD<Topic> {
         return topics;
     }
 
-
+    @Override
+    public ArrayList<Topic> getTopicQuestionCounts(){
+        itopic = new Topic_DAO();
+        return itopic.getTopicQuestionCounts();
+    }
 }
