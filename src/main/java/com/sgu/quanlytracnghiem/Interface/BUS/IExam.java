@@ -1,5 +1,6 @@
 package com.sgu.quanlytracnghiem.Interface.BUS;
 
+import com.sgu.quanlytracnghiem.BUS.Exam_BUS;
 import com.sgu.quanlytracnghiem.DTO.Exam;
 import com.sgu.quanlytracnghiem.DTO.Question;
 import com.sgu.quanlytracnghiem.DTO.Test;

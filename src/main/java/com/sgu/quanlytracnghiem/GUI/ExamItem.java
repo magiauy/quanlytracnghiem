@@ -7,9 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
+@Slf4j
 public class ExamItem {
 
     @FXML
@@ -17,11 +19,9 @@ public class ExamItem {
     @FXML
     private Button btnWatchResult;
     @FXML
-    private TextField txtTime;
+    private Label lblLimit;
     @FXML
-    private TextField txtLimit;
-    @FXML
-    private TextField txtTrangThai;
+    private Label lblTime;
     @FXML
     private Pane paneExams;
     @FXML
@@ -29,35 +29,18 @@ public class ExamItem {
 
     private int time;
     private int limit;
-    private int trangThai;
     private String examName;
 
     public ExamItem(Test test) {
         this.examName = test.getTestTitle();
         this.time = test.getTestTime();
         this.limit = test.getTestLimit();
-        this.trangThai = test.getTestStatus();
-        loadFXML();  // Load FXML khi khởi tạo
-    }
-
-    private void loadFXML() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/sgu/quanlytracnghiem/GUI/ExamItem.fxml"));
-        loader.setController(this);  // Gán controller cho ExamItem này
-        try {
-            this.paneExams = loader.load();  // Load layout vào Pane
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void initialize() {
         lbExamName.setText(examName);
-        txtTime.setText(String.valueOf(time));
-        txtLimit.setText(String.valueOf(limit));
-        txtTrangThai.setText(trangThai == 1 ? "Đã mở" : "Chưa mở");
+        lblTime.setText(String.valueOf(time));
+        lblLimit.setText(String.valueOf(limit));
     }
 
-    public Pane getPaneExams() {
-        return paneExams;  // Trả về Pane của ExamItem
-    }
 }
