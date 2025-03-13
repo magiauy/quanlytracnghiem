@@ -66,7 +66,7 @@ public class ExamItemController {
         radioButton.setSelected(answer.isAnswerCorrect());
         // VBox chứa RadioButton + Text (để wrap text hoạt động đúng)
 
-        Label answerIndex = new Label(STR."\{(char) ('A' + i)}. ");
+        Label answerIndex = new Label((char) ('A' + i) + ". ");
         answerIndex.setStyle("-fx-font-weight: bold;");
 
 

@@ -70,7 +70,7 @@ public class AboutExamController {
         colQuestionText.setCellValueFactory(new PropertyValueFactory<>("questionContent"));
         tableQuestion.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("ExamItem.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ExamQuestionItem.fxml"));
                 ExamItemController controller = new ExamItemController(newSelection);
                 loader.setController(controller);
                 try {
