@@ -71,7 +71,7 @@ public class UserController {
         userFullname.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         userMail.setCellValueFactory(new PropertyValueFactory<>("email"));
         userName.setCellValueFactory(new PropertyValueFactory<>("username"));
-        role.setCellValueFactory(new PropertyValueFactory<>("isAdmin"));
+        role.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().isAdmin() ? "Admin" : "User"));
 
         ObservableList<User> data = FXCollections.observableArrayList(userBus.getAll());
         tblUser.setItems(data);

@@ -115,12 +115,12 @@
          </columns>
       </TableView>
 
-      <Button fx:id="btnSave" layoutX="134.0" layoutY="649.0" mnemonicParsing="false" text="Lưu nháp">
+      <Button fx:id="btnSave" layoutX="21.0" layoutY="649.0" mnemonicParsing="false" text="Lưu nháp">
          <font>
             <Font name="System Bold" size="31.0" />
          </font>
       </Button>
-      <Button fx:id="btnGenerate" layoutX="323.0" layoutY="649.0" mnemonicParsing="false" text="Tạo bài thi">
+      <Button fx:id="btnGenerate" layoutX="209.0" layoutY="649.0" mnemonicParsing="false" text="Tạo bài thi">
          <font>
             <Font name="System Bold" size="31.0" />
          </font>
@@ -159,7 +159,12 @@
             <Font name="System Bold" size="38.0" />
          </font>
       </Label>
-      <Button fx:id="btnViewExam" layoutX="528.0" layoutY="649.0" mnemonicParsing="false" text="Xem bài thi">
+      <Button fx:id="btnViewExam" layoutX="420.0" layoutY="649.0" mnemonicParsing="false" text="Xem bài thi">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDeploy" layoutX="636.0" layoutY="649.0" mnemonicParsing="false" text="Phát hành">
          <font>
             <Font name="System Bold" size="31.0" />
          </font>
