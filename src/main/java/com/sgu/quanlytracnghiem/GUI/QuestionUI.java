@@ -93,6 +93,10 @@ public class QuestionUI {
             });
         });
 
+        txtSearch.textProperty().addListener(((observable, oldValue, newValue) -> {
+            tblQuestion.setItems(FXCollections.observableArrayList(questionBUS.getAll().stream().filter(question -> question.getQuestionContent().toLowerCase().contains(newValue.toLowerCase())).toList()));
+            tblQuestion.refresh();
+        }));
 
     }
 
