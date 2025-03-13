@@ -163,13 +163,12 @@ public class Topic_DAO implements GenericDAO<Topic>, ITopic {
     public ArrayList<Topic> getTopicQuestionCounts() {
         ArrayList<Topic> topicQuestionCounts = new ArrayList<>();
         String sql = "SELECT t.tpID, t.tpTitle, " +
-                "SUM(IF(q.qLevel = 'Easy', 1, 0)) AS SoCauDe, " +
-                "SUM(IF(q.qLevel = 'Medium', 1, 0)) AS SoCauVua, " +
-                "SUM(IF(q.qLevel = 'Diff', 1, 0)) AS SoCauKho " +
-                "FROM topic t " +
-                "LEFT JOIN Question q ON t.tpID = q.qTopicID " +
-                "GROUP BY t.tpTitle";
-
+            "SUM(IF(q.qLevel = 'Easy', 1, 0)) AS SoCauDe, " +
+            "SUM(IF(q.qLevel = 'Medium', 1, 0)) AS SoCauVua, " +
+            "SUM(IF(q.qLevel = 'Diff', 1, 0)) AS SoCauKho " +
+            "FROM topic t " +
+            "LEFT JOIN Question q ON t.tpID = q.qTopicID " +
+            "GROUP BY t.tpID, t.tpTitle";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
