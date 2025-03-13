@@ -1,4 +1,4 @@
-package com.sgu.quanlytracnghiem.BUS;
+package com.sgu.quanlytracnghiem.Interface.BUS;
 
 import com.sgu.quanlytracnghiem.DTO.Question;
 

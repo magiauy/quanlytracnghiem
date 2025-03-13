@@ -2,7 +2,6 @@ package com.sgu.quanlytracnghiem.GUI;
 
 import com.sgu.quanlytracnghiem.BUS.Answers_BUS;
 import com.sgu.quanlytracnghiem.BUS.Exam_BUS;
-import com.sgu.quanlytracnghiem.DTO.Answers;
 import com.sgu.quanlytracnghiem.DTO.Exam;
 import com.sgu.quanlytracnghiem.DTO.Question;
 import com.sgu.quanlytracnghiem.Interface.BUS.IAnswers;
@@ -13,9 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import lombok.extern.slf4j.Slf4j;
 
@@ -71,7 +67,7 @@ public class AboutExamController {
         tableQuestion.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("ExamQuestionItem.fxml"));
-                ExamItemController controller = new ExamItemController(newSelection);
+                QAForm controller = new QAForm(newSelection);
                 loader.setController(controller);
                 try {
                     paneDetail.getChildren().clear();

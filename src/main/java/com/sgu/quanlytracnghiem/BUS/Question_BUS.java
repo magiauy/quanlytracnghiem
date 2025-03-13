@@ -3,12 +3,13 @@ package com.sgu.quanlytracnghiem.BUS;
 import com.sgu.quanlytracnghiem.DTO.Question;
 import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
 import com.sgu.quanlytracnghiem.DAO.Question_DAO;
+import com.sgu.quanlytracnghiem.Interface.BUS.IQuestion;
 import com.sgu.quanlytracnghiem.Interface.BUS.IdGenerate;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 
 import java.util.ArrayList;
 
-public class Question_BUS implements CRUD<Question> , IdGenerate ,IQuestion {
+public class Question_BUS implements CRUD<Question> , IdGenerate , IQuestion {
 
     ArrayList<Question> questions ;
     GenericDAO<Question> question_dao = new Question_DAO();

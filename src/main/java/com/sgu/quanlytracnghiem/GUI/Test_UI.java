@@ -61,7 +61,7 @@ public class Test_UI {
 
 
         imgAdd.setOnMouseClicked(event -> {openStage("AboutTest.fxml");});
-        imgEdit.setOnMouseClicked(_ -> {
+        imgEdit.setOnMouseClicked(mouseEvent ->  {
             if (testSelected != null) {
                 isEditable = true;
                 openStage("AboutTest.fxml");

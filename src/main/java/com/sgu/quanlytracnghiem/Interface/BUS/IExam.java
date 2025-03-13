@@ -10,5 +10,7 @@ import java.util.ArrayList;
 public interface IExam {
     void generateExam(Test test);
     ArrayList<Exam> getExamsByTest(String testCode);
+    Exam getRandomExamByTest(String testCode);
+
 
 }

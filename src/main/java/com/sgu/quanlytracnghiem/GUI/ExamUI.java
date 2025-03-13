@@ -6,6 +6,7 @@ import com.sgu.quanlytracnghiem.DTO.Test;
 import com.sgu.quanlytracnghiem.DTO.Exam;
 import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
 import com.sgu.quanlytracnghiem.Interface.BUS.IExam;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
@@ -14,7 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lombok.extern.slf4j.Slf4j;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import java.util.ArrayList;
 
 @Slf4j
@@ -58,5 +60,6 @@ public class ExamUI {
             log.error("Error: ", e);
         }
     }
+
 
 }

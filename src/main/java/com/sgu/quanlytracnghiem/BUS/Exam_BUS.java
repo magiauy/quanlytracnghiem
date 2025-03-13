@@ -4,13 +4,12 @@ import com.sgu.quanlytracnghiem.DAO.Exam_DAO;
 import com.sgu.quanlytracnghiem.DTO.*;
 import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
 import com.sgu.quanlytracnghiem.Interface.BUS.IExam;
+import com.sgu.quanlytracnghiem.Interface.BUS.IQuestion;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Exam_BUS implements CRUD<Exam> , IExam {
     ArrayList<Exam> exams = new ArrayList<>();
@@ -153,5 +152,13 @@ public class Exam_BUS implements CRUD<Exam> , IExam {
             }
         }
         return examByTest;
+    }
+    @Override
+    public Exam getRandomExamByTest(String testID) {
+        //Random
+        ArrayList<Exam> exams = getExamsByTest(testID);
+        int index = (int) (Math.random() * exams.size());
+        return exams.get(index);
+
     }
 }
