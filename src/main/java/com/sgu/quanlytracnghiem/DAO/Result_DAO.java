@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class Result_DAO implements GenericDAO<Result> {
@@ -181,5 +184,48 @@ public class Result_DAO implements GenericDAO<Result> {
         }
         return username;
     }
+
+    public String getQuestionContentById(String qID) {
+        String qContent = null;
+        String sql = "SELECT qContent FROM question WHERE qID = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, Integer.parseInt(qID));
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                qContent = rs.getString("qContent");
+            }
+        } catch (SQLException e) {
+            log.error("Failed to get question content by qID: ", e);
+        }
+        return qContent;
+    }
+
+    public ArrayList<Answers> getAnswersByQuestionId(String qID) {
+        ArrayList<Answers> answersList = new ArrayList<>();
+        String sql = "SELECT awID, awContent, awPictures, isRight, awStatus FROM answers WHERE qID = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, Integer.parseInt(qID));
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Answers answer = new Answers();
+                answer.setAnswerID(rs.getInt("awID"));
+                answer.setAnswerContent(rs.getString("awContent"));
+                answer.setAnswerPictures(rs.getString("awPictures"));
+                answer.setIsRight(rs.getBoolean("isRight"));
+                answer.setAnswerStatus(rs.getBoolean("awStatus"));
+                answersList.add(answer);
+            }
+        } catch (SQLException e) {
+            log.error("Failed to get answers by qID: ", e);
+        }
+        return answersList;
+    }
+
+
+
 
 }

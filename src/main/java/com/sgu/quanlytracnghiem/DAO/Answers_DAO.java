@@ -111,16 +111,29 @@ public class Answers_DAO implements GenericDAO<Answers>, IAnswers_DAO {
 
     @Override
     public Answers getById(String id) {
-        Answers answers = new Answers();
+        Answers answers = null;  // Ban đầu đặt null để kiểm tra lỗi
         try {
             String sql = "SELECT * FROM answers WHERE awID = ?";
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, id);
-                ps.executeQuery();
+                ResultSet rs = ps.executeQuery();  // Lấy ResultSet
+
+                if (rs.next()) {  // Nếu có dữ liệu
+                    answers = new Answers(
+                            rs.getInt("awID"),         // Lấy ID câu trả lời
+                            rs.getInt("qID"),          // Lấy ID câu hỏi
+                            rs.getString("awContent"), // Nội dung câu trả lời
+                            rs.getString("awPictures"),// Ảnh (nếu có)
+                            rs.getBoolean("isRight"),  // Câu trả lời đúng/sai
+                            rs.getBoolean("awStatus")  // Trạng thái câu trả lời
+                    );
+                }
             }
         } catch (Exception e) {
             log.error("Failed to get answers by id: ", e);
         }
+
+
         return answers;
     }
 
