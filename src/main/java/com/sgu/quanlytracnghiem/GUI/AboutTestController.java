@@ -76,6 +76,9 @@ public class AboutTestController {
     @FXML
     private Button btnViewExam;
     @FXML
+    private Button btnDeploy;
+
+    @FXML
     private AnchorPane anchorPane;
 
     Map<Integer,String> status;
@@ -153,14 +156,14 @@ public class AboutTestController {
            }
         });
         loadStatus();
-
+        btnSave.setPrefWidth(180);
+        btnSave.setText(globalTest.getTestStatus()==2?"Lưu nháp:":"Lưu");
         btnSave.setOnMouseClicked(event -> {
             globalTest.setTestLimit(Integer.parseInt(txtLimit.getText()));
             globalTest.setTestTime(Integer.parseInt(txtTime.getText()));
             globalTest.setTestCode(txtTestCode.getText());
             globalTest.setTestDate(dpDate.getValue());
             globalTest.setTestTitle(txtTitle.getText());
-            globalTest.setTestStatus(2);
             if (Test_UI.isEditable()) {
                 if (Test_UI.getTestCRUD().update(globalTest)) {
                     ValidationUtil.showInfoAlert("Cập nhật thành công");
@@ -168,6 +171,7 @@ public class AboutTestController {
                     ValidationUtil.showErrorAlert("Cập nhật thất bại");
                 }
             }else {
+                globalTest.setTestStatus(2);
                 if (Test_UI.getTestCRUD().add(globalTest)){
                     ValidationUtil.showInfoAlert("Thêm thành công");
                 }else {
@@ -191,6 +195,18 @@ public class AboutTestController {
             openStage("Xem đề thi","AboutExam.fxml",()->{
 
             });
+        });
+
+        btnDeploy.setPrefWidth(190);
+        btnDeploy.setOnAction(event -> {
+            if (btnDeploy.getText().equals("Mở đề")) {
+                globalTest.setTestStatus(1);
+            }else {
+                globalTest.setTestStatus(0);
+
+            }
+            Test_UI.getTestCRUD().update(globalTest);
+            loadStatus();
         });
 
     }
@@ -265,6 +281,7 @@ public class AboutTestController {
                 txtTime.setDisable(true);
                 txtLimit.setDisable(true);
                 dpDate.setDisable(true);
+                btnDeploy.setText("Mở đề");
                 break;
             case 1:
                 lblStatus.setText("Đang mở");
@@ -272,17 +289,27 @@ public class AboutTestController {
                 txtTestCode.setDisable(true);
                 txtTime.setDisable(true);
                 dpDate.setDisable(true);
+                btnDeploy.setText("Khoá đề");
+                btnGenerate.setDisable(true);
+                //Hide
+                imgAdd.setDisable(true);
+                imgEdit.setDisable(true);
+                imgDelete.setDisable(true);
+
+
                 break;
             case 2:
                 lblStatus.setText("Nháp");
                 lblStatus.setStyle("-fx-text-fill: #FFC107");
                 btnViewExam.setDisable(true);
+                btnDeploy.setDisable(true);
                 break;
             case 3:
                 lblStatus.setText("Đã tạo");
                 lblStatus.setStyle("-fx-text-fill: green");
                 txtTestCode.setDisable(true);
                 btnGenerate.setDisable(true);
+
                 break;
 
         }

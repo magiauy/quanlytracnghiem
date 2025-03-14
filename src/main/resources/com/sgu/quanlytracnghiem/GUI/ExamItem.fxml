@@ -1,26 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefWidth="362.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
-    <children>
-        <VBox prefWidth="362.0" spacing="10">
-            <!-- Câu hỏi -->
-            <Label fx:id="questionLabel" maxWidth="362.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Câu1:.....aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" wrapText="true" />
-
-            <!-- Hình ảnh nếu có -->
-            <ImageView fx:id="questionImage" fitHeight="150" fitWidth="250" preserveRatio="true" visible="false" />
-
-            <!-- Pane chứa câu trả lời, sẽ được thêm bằng code Java -->
-            <ScrollPane fx:id="answerPane" fitToWidth="true" prefHeight="200.0" prefWidth="600.0">
-                <content>
-                    <VBox fx:id="answerContainer" spacing="5" />
-                </content>
-            </ScrollPane>
-        </VBox>
-    </children>
+<AnchorPane prefHeight="124.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane fx:id="paneExams" layoutY="5.0" prefHeight="115.0" prefWidth="792.0">
+         <children>
+            <Label id="lbExamName1" fx:id="lbExamName" layoutX="14.0" layoutY="14.0" text="Bài kiểm tra môn ABC">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="59.0" text="Thời gian làm bài:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="210.0" layoutY="59.0" text="phút">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="280.0" layoutY="59.0" text="Số lần làm bài:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button id="btnThi" fx:id="btnThi" layoutX="611.0" layoutY="17.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: #3fb97c;" text="Vào thi" textAlignment="CENTER" textFill="#010302">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button id="btnThi" fx:id="btnWatchResult" layoutX="611.0" layoutY="62.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: pink;" text="Xem KQ" textAlignment="CENTER" textFill="#010302">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label fx:id="lblTime" layoutX="162.0" layoutY="59.0" text="XXXX">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblLimit" layoutX="396.0" layoutY="59.0" text="XXXX">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>

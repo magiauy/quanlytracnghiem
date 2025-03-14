@@ -1,7 +1,9 @@
 package com.sgu.quanlytracnghiem.GUI;
 
+import com.sgu.quanlytracnghiem.BUS.Answers_BUS;
 import com.sgu.quanlytracnghiem.DTO.Answers;
 import com.sgu.quanlytracnghiem.DTO.Question;
+import com.sgu.quanlytracnghiem.Interface.BUS.IAnswers;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -15,7 +17,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-public class ExamItemController {
+public class QAForm {
     @FXML
     public Label questionLabel;
     @FXML
@@ -27,27 +29,34 @@ public class ExamItemController {
     ToggleGroup toggleGroup = new ToggleGroup();
     String questionContent;
     String questionPicture;
+
+    @FXML
+    public VBox questionVbox;
     int questionId;
+    IAnswers answers_BUS;
+
+
     ArrayList<Answers> answers;
-    public ExamItemController(Question question) {
+    public QAForm(Question question) {
         questionId = question.getQuestionID();
         questionContent = question.getQuestionContent();
         questionPicture = question.getQuestionPicture();
     }
 
     public void initialize() {
+        answers_BUS = new Answers_BUS();
         questionLabel.setText(questionContent);
         if (questionPicture != null) {
-            questionImage.setVisible(true);
+//            remove questionImage
+            questionVbox.getChildren().remove(questionImage);
         }
-        answers = AboutExamController.answerBus.getAnswersByQuestionID(questionId);
-
+        answers = answers_BUS.getAnswersByQuestionID(questionId);
         for (int i = 0; i < answers.size(); i++) {
             Answers answer = answers.get(i);
             HBox answerBox = createAnswerBox(answer,i);
             // Khi đủ 2 câu trả lời trên một hàng, thêm vào VBox và tạo hàng mới
-                answerContainer.getChildren().add(answerBox);
-            }
+            answerContainer.getChildren().add(answerBox);
+        }
 
     }
     private HBox createAnswerBox(Answers answer,int i) {
@@ -83,6 +92,6 @@ public class ExamItemController {
 
         return answerBox;
     }
-    }
+}
 
 

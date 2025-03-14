@@ -7,7 +7,7 @@ import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
 import com.sgu.quanlytracnghiem.Util.ValidationUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +28,6 @@ public class Test_UI {
     private VBox vbox;
     @FXML
     private TextField txtSearch;
-    @FXML
-    private Button btnSearch;
     @FXML
     private ImageView imgAdd;
     @FXML
@@ -64,7 +61,7 @@ public class Test_UI {
 
 
         imgAdd.setOnMouseClicked(event -> {openStage("AboutTest.fxml");});
-        imgEdit.setOnMouseClicked(_ -> {
+        imgEdit.setOnMouseClicked(mouseEvent ->  {
             if (testSelected != null) {
                 isEditable = true;
                 openStage("AboutTest.fxml");
@@ -72,7 +69,16 @@ public class Test_UI {
                 ValidationUtil.showErrorAlert("Vui lòng chọn bài thi cần sửa");
             }
         });
+
+        //TxtSearch
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            vbox.getChildren().clear();
+            testList.stream().filter(test -> test.getTestTitle().toLowerCase().contains(newValue.toLowerCase())).forEach(this::loadTestItem);
+        });
+
     }
+
+
 
     //Is selected
 

@@ -210,6 +210,7 @@ public class Test_DAO implements GenericDAO<Test> , IdGenerate {
             String sql = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'test'";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
+
             return rs.next() ? rs.getInt(1) : -1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
