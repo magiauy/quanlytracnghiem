@@ -16,6 +16,14 @@ public class Answers {
     private String awPicture;
     private boolean answerCorrect;
     private boolean answerStatus;
+
+
+    @Override
+    public String toString() {
+        return String.valueOf(answerID);
+    }
 }
+
+
 // Khi gọi Answers lên trên admin , sẽ gọi toàn bộ các thuộc tính
 //Khi gọi Answers lên trên user bình thường , không gọi thuộc tính answerCorrect và answerStatus

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 @Data
 @Builder
@@ -19,7 +20,7 @@ public class Result {
     private int userID;
     private ArrayList<Answers> answers;
     private BigDecimal resultScore;
-    private LocalDate resultDate;
+    private LocalDateTime resultDate;
+    private boolean isSubmit;
 }
 
-//Khi User bắt đầu làm bài , khởi tạo Array Answers số lượng bằng các câu hỏi của bài thi và giá trị mặc định là null

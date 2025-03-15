@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Builder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -17,5 +17,5 @@ public class Logs {
     private int logUserID;
     private String logExamID;
     private String logContent;
-    private LocalDate logTime;
+    private LocalDateTime logTime;
 }

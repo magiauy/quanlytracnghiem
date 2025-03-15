@@ -2,14 +2,16 @@ package com.sgu.quanlytracnghiem.DAO;
 
 import com.sgu.quanlytracnghiem.DTO.Answers;
 import com.sgu.quanlytracnghiem.DTO.Result;
+import com.sgu.quanlytracnghiem.Interface.BUS.IdGenerate;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
+import com.sgu.quanlytracnghiem.Interface.DAO.IResult_DAO;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 @Slf4j
-public class Result_DAO implements GenericDAO<Result> {
+public class Result_DAO implements GenericDAO<Result>, IdGenerate , IResult_DAO {
     Connection connection = Connect.getInstance().getConnection();
     GenericDAO<Answers> answers_dao = new Answers_DAO();
 
@@ -18,14 +20,15 @@ public class Result_DAO implements GenericDAO<Result> {
         public boolean insert(Result obj) {
             try {
                 connection.setAutoCommit(false);
-                String sql = "INSERT INTO result (rsID,exID,userID,rsAnswers,rsMark,rsDate) VALUES (?, ?, ?, ?, ?,?)";
+                String sql = "INSERT INTO result (rsID,exID,userID,rsAnswers,rsMark,rsDate,isSubmit) VALUES (?, ?,?, ?, ?, ?,?)";
                 try (PreparedStatement ps = connection.prepareStatement(sql)) {
                     ps.setInt(1, obj.getResultID());
                     ps.setString(2, obj.getExamID());
                     ps.setInt(3, obj.getUserID());
                     ps.setString(4, obj.getAnswers().toString());
                     ps.setBigDecimal(5, obj.getResultScore());
-                    ps.setDate(6, Date.valueOf(obj.getResultDate()));
+                    ps.setTimestamp(6, Timestamp.valueOf(obj.getResultDate()));
+                    ps.setInt(7, obj.isSubmit()?1:0);
                     ps.executeUpdate();
                 }
                 connection.commit();
@@ -52,14 +55,16 @@ public class Result_DAO implements GenericDAO<Result> {
         public boolean update(Result obj) {
             try {
                 connection.setAutoCommit(false);
-                String sql = "UPDATE result SET exID = ?, userID = ?, rsAnswers = ?, rsMark = ?, rsDate = ? WHERE rsID = ?";
+                String sql = "UPDATE result SET exID = ?, userID = ?, rsAnswers = ?, rsMark = ?, rsDate = ? , isSubmit = ? WHERE rsID = ?";
                 try (PreparedStatement ps = connection.prepareStatement(sql)) {
                     ps.setString(1, obj.getExamID());
                     ps.setInt(2, obj.getUserID());
                     ps.setString(3, obj.getAnswers().toString());
                     ps.setBigDecimal(4, obj.getResultScore());
-                    ps.setDate(5, Date.valueOf(obj.getResultDate()));
-                    ps.setInt(6, obj.getResultID());
+                    ps.setTimestamp(5, Timestamp.valueOf(obj.getResultDate()));
+                    ps.setInt(6, obj.isSubmit()?1:0);
+                    ps.setInt(7, obj.getResultID());
+
                     ps.executeUpdate();
                 }
                 connection.commit();
@@ -123,7 +128,7 @@ public class Result_DAO implements GenericDAO<Result> {
                         result.setUserID(preparedStatement.getResultSet().getInt("userID"));
                         result.setAnswers(getListAnswersByID(preparedStatement.getResultSet().getString("rsAnswers")));
                         result.setResultScore(preparedStatement.getResultSet().getBigDecimal("rsMark"));
-                        result.setResultDate(preparedStatement.getResultSet().getDate("rsDate").toLocalDate());
+                        result.setResultDate(preparedStatement.getResultSet().getTimestamp("rsDate").toLocalDateTime());
                     }
 
                 }
@@ -147,7 +152,7 @@ public class Result_DAO implements GenericDAO<Result> {
                     result.setUserID(preparedStatement.getResultSet().getInt("userID"));
                     result.setAnswers(getListAnswersByID(preparedStatement.getResultSet().getString("rsAnswers")));
                     result.setResultScore(preparedStatement.getResultSet().getBigDecimal("rsMark"));
-                    result.setResultDate(preparedStatement.getResultSet().getDate("rsDate").toLocalDate());
+                    result.setResultDate(preparedStatement.getResultSet().getTimestamp("rsDate").toLocalDateTime());
                     results.add(result);
                 }
             }
@@ -156,15 +161,34 @@ public class Result_DAO implements GenericDAO<Result> {
         }
             return results;
         }
-    public ArrayList<Answers> getListAnswersByID(String id){
-        //id is 1,2,3,4,5
+    public ArrayList<Answers> getListAnswersByID(String id) {
         ArrayList<Answers> answers = new ArrayList<>();
+        if (id == null || id.isEmpty()) {
+            return answers;
+        }
+        // Loại bỏ khoảng trắng thừa và dấu ngoặc vuông
+        id = id.trim();
+        if (id.startsWith("[") && id.endsWith("]")) {
+            id = id.substring(1, id.length() - 1);
+        }
+        // Tách các id theo dấu phẩy và loại bỏ khoảng trắng ở mỗi phần tử
         String[] listID = id.split(",");
         for (String s : listID) {
-            answers.add(answers_dao.getById(s));
+            s = s.trim();
+            if (!s.isEmpty()) {
+                if (s.equals("null")) {
+                    answers.add(null);
+                }else {
+                    Answers answer = answers_dao.getById(s);
+                    answers.add(answer);
+                }
+            }else {
+                answers.add(null);
+            }
         }
         return answers;
     }
+
     public String getUsernameById(String id) {
         String username = null;
         String sql = "SELECT username FROM user WHERE userID = ?";
@@ -177,9 +201,98 @@ public class Result_DAO implements GenericDAO<Result> {
                 username = rs.getString("username");
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Hoặc log.error("Lỗi khi lấy username: ", e);
+          log.error("Lỗi khi lấy username: ", e);
         }
         return username;
     }
 
+    @Override
+    public int generateId() {
+        try {
+            String sql = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'result'";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            return rs.next() ? rs.getInt(1) : -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getAttemptCount(int userId, String testCode) {
+        int attemptCount = 0;
+        String sql = """
+            SELECT e.testCode, r.userID, COUNT(r.exID) AS attempt_count
+            FROM exam e
+            LEFT JOIN result r ON e.exCode = r.exID
+            WHERE r.userID = ? AND e.testCode = ?
+            GROUP BY e.testCode, r.userID
+        """;
+
+        try{
+             PreparedStatement stmt = connection.prepareStatement(sql);
+
+            stmt.setInt(1, userId);
+            stmt.setString(2, testCode);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    attemptCount = rs.getInt("attempt_count");
+                }
+            }
+        } catch (Exception e) {
+            log.error("Failed to get attempt count: ", e);
+        }
+        return attemptCount;
+    }
+    public Result getActiveResult(int userId, String testCode) {
+        Result resultObj = null;
+        String sql = """
+            SELECT 
+                r.rsDate, 
+                r.rsID,
+                r.exID,
+                r.rsAnswers,
+                t.testTime,
+                (r.rsDate + INTERVAL t.testTime MINUTE) AS expiryDate
+            FROM result r
+            JOIN exam e ON r.exID = e.exCode
+            JOIN test t ON e.testCode = t.testCode
+            WHERE t.testCode = ? 
+              AND r.userID = ?
+              AND r.isSubmit = 0
+              AND (r.rsDate + INTERVAL t.testTime MINUTE) > NOW()
+            ORDER BY r.rsDate DESC
+            LIMIT 1
+            """;
+
+        // Sử dụng connection đã có
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, testCode);
+            stmt.setInt(2, userId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    resultObj = new Result();
+                    resultObj.setResultID(rs.getInt("rsID"));
+                    resultObj.setExamID(rs.getString("exID"));
+                    Timestamp ts = rs.getTimestamp("rsDate");
+                    if (ts != null) {
+                        resultObj.setResultDate(ts.toLocalDateTime());
+                    }
+                    resultObj.setUserID(userId);
+                    resultObj.setSubmit(false);  // Vì isSubmit = 0 trong truy vấn
+
+                    // Lấy dữ liệu answers và chuyển đổi sang ArrayList<Answers>
+                    String answersStr = rs.getString("rsAnswers");
+                    resultObj.setAnswers(getListAnswersByID(answersStr));
+
+                    // Nếu cần, có thể xử lý các trường khác như resultScore (nếu có)
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Failed to get active result: ", e);
+        }
+        return resultObj;
+    }
 }

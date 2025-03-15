@@ -54,7 +54,7 @@ public class AboutExamController {
             tableQuestion.refresh();
         });
         cbTestCode.getSelectionModel().select(0);
-        ObservableList<Question> questions = FXCollections.observableArrayList(exams.getFirst().getQuestions());
+        ObservableList<Question> questions = FXCollections.observableArrayList(exams.get(0).getQuestions());
         tableQuestion.setItems(questions);
         tableQuestion.refresh();
 
@@ -67,7 +67,7 @@ public class AboutExamController {
         tableQuestion.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("ExamQuestionItem.fxml"));
-                QAForm controller = new QAForm(newSelection);
+                ExamItemController controller = new ExamItemController(newSelection);
                 loader.setController(controller);
                 try {
                     paneDetail.getChildren().clear();

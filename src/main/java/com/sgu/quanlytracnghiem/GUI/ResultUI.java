@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ResultUI {
@@ -39,7 +40,7 @@ public class ResultUI {
     private TableColumn<Result, String> colExamCode;
 
     @FXML
-    private TableColumn<Result, LocalDate> colExamDate;
+    private TableColumn<Result, LocalDateTime> colExamDate;
 
     @FXML
     private TableColumn<Result, BigDecimal> colResultScore;

@@ -117,6 +117,15 @@ public class Answers_DAO implements GenericDAO<Answers>, IAnswers_DAO {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, id);
                 ps.executeQuery();
+                ResultSet rs = ps.getResultSet();
+                if (rs.next()) {
+                    answers.setAnswerID(rs.getInt("awID"));
+                    answers.setQuestionID(rs.getInt("qID"));
+                    answers.setAnswerContent(rs.getString("awContent"));
+                    answers.setAwPicture(rs.getString("awPicTures"));
+                    answers.setAnswerCorrect(rs.getBoolean("isRight"));
+                    answers.setAnswerStatus(rs.getBoolean("awStatus"));
+                }
             }
         } catch (Exception e) {
             log.error("Failed to get answers by id: ", e);

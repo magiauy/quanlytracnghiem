@@ -18,6 +18,14 @@ public class ValidationUtil {
         alert.showAndWait();
     }
 
+    public static void showErrorAlert(String title ,String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     public static void showInfoAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
@@ -193,6 +201,13 @@ public class ValidationUtil {
     public static boolean showConfirmAlert(String s) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText(s);
+        return alert.showAndWait().map(buttonType -> buttonType == ButtonType.OK).orElse(false);
+    }
+    public static boolean showConfirmAlert(String title,String s) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(s);
         return alert.showAndWait().map(buttonType -> buttonType == ButtonType.OK).orElse(false);

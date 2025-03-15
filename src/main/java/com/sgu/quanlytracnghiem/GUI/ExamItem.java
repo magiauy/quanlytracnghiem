@@ -1,6 +1,9 @@
 package com.sgu.quanlytracnghiem.GUI;
 
+import com.sgu.quanlytracnghiem.BUS.CheckingExam;
+import com.sgu.quanlytracnghiem.DTO.Result;
 import com.sgu.quanlytracnghiem.DTO.Test;
+import com.sgu.quanlytracnghiem.Interface.BUS.ResultChecking;
 import com.sgu.quanlytracnghiem.Util.UI_Util;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,26 +37,50 @@ public class ExamItem {
     private int limit;
     private String examName;
 
+    private Test test;
+    ResultChecking resultChecking;
 
     @Getter
     @Setter
-    public static Test test;
+    private static boolean isSubmit = false;
 
     public ExamItem(Test test) {
         this.examName = test.getTestTitle();
         this.time = test.getTestTime();
         this.limit = test.getTestLimit();
-        ExamItem.test = new Test(test);
+        this.test = new Test(test);
     }
 
     public void initialize() {
+        resultChecking = new CheckingExam();
+        btnThi.setDisable(!resultChecking.check(test, Login.getUser().getId()));
+        if (resultChecking.getResult(test, Login.getUser().getId())!=null){
+            btnThi.setDisable(false);
+        }
+
+
         lbExamName.setText(examName);
         lblTime.setText(String.valueOf(time));
         lblLimit.setText(String.valueOf(limit));
         btnThi.setOnAction(event -> {
-            UI_Util.openStage("Thi","ExamForm.fxml",()->{
-
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ExamForm.fxml"));
+            Result result = resultChecking.getResult(test, Login.getUser().getId());
+            ExamFormController controller ;
+            if ((result != null)) {
+                isSubmit = false;
+                controller =  new ExamFormController(result,test);
+            } else {
+                isSubmit = true;
+                controller = new ExamFormController(test);
+            }
+            fxmlLoader.setController(controller);
+            UI_Util.openStage(fxmlLoader,"Thi",()->{
+                if (ExamFormController.isSubmit()){
+                    btnThi.setDisable(!resultChecking.check(test, Login.getUser().getId()));
+                }
             });
+
+
         });
     }
 

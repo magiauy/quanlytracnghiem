@@ -4,10 +4,7 @@ import com.sgu.quanlytracnghiem.DTO.Logs;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 @Slf4j
 public class Logs_DAO implements GenericDAO<Logs> {
@@ -24,7 +21,7 @@ public class Logs_DAO implements GenericDAO<Logs> {
                     preparedStatement.setInt(2, obj.getLogUserID());
                     preparedStatement.setString(3, obj.getLogExamID());
                     preparedStatement.setString(4, obj.getLogContent());
-                    preparedStatement.setDate(5, Date.valueOf(obj.getLogTime()));
+                    preparedStatement.setTimestamp(5, Timestamp.valueOf(obj.getLogTime()));
 
                     preparedStatement.executeUpdate();
                 }
@@ -52,7 +49,7 @@ public class Logs_DAO implements GenericDAO<Logs> {
                     preparedStatement.setInt(1, obj.getLogUserID());
                     preparedStatement.setString(2, obj.getLogExamID());
                     preparedStatement.setString(3, obj.getLogContent());
-                    preparedStatement.setDate(4, Date.valueOf(obj.getLogTime()));
+                    preparedStatement.setTimestamp(4, Timestamp.valueOf(obj.getLogTime()));
                     preparedStatement.setInt(5, obj.getLogsID());
                     preparedStatement.executeUpdate();
                 }
@@ -136,7 +133,7 @@ public class Logs_DAO implements GenericDAO<Logs> {
                         log.setLogUserID(preparedStatement.getResultSet().getInt("logUserID"));
                         log.setLogExamID(preparedStatement.getResultSet().getString("logExID"));
                         log.setLogContent(preparedStatement.getResultSet().getString("logContent"));
-                        log.setLogTime(preparedStatement.getResultSet().getDate("logDate").toLocalDate());
+                        log.setLogTime(preparedStatement.getResultSet().getTimestamp("logDate").toLocalDateTime());
                         logs.add(log);
                     }
                 }

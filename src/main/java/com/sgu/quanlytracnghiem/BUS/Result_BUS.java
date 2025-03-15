@@ -2,14 +2,16 @@ package com.sgu.quanlytracnghiem.BUS;
 
 import com.sgu.quanlytracnghiem.DTO.Result;
 import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
+import com.sgu.quanlytracnghiem.Interface.BUS.IdGenerate;
 import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 import com.sgu.quanlytracnghiem.DAO.Result_DAO;
 
 import java.util.ArrayList;
 
-public class Result_BUS implements CRUD<Result> {
+public class Result_BUS implements CRUD<Result> , IdGenerate {
     ArrayList<Result> results = new ArrayList<>();
     static GenericDAO<Result> result_dao;
+    IdGenerate idGenerate = new Result_DAO();
 
     public Result_BUS() {
         result_dao = new Result_DAO();
@@ -73,6 +75,11 @@ public class Result_BUS implements CRUD<Result> {
     @Override
     public ArrayList<Result> getAll() {
         return results;
+    }
+
+    @Override
+    public int generateId() {
+        return idGenerate.generateId();
     }
 
 }

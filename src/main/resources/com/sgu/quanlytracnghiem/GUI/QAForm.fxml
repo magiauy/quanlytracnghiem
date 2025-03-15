@@ -6,15 +6,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="questionVbox" layoutX="-6.0" prefHeight="400.0" prefWidth="787.0">
+      <VBox fx:id="questionVbox" layoutX="0" layoutY="0" prefWidth="700.0" spacing="10">
          <children>
-            <Label fx:id="questionLabel" contentDisplay="CENTER" prefHeight="83.0" prefWidth="787.0" style="-fx-alignment: top-left; -fx-font-weight: bold;" text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
-            <ImageView fx:id="questionImage" fitHeight="141.0" fitWidth="785.0" pickOnBounds="true" preserveRatio="true" />
-            <ScrollPane fx:id="answerPane" prefHeight="200.0" prefWidth="200.0">
+            <!-- Câu hỏi -->
+            <Label fx:id="questionLabel" maxWidth="760.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Câu hỏi mẫu" wrapText="true" />
+
+            <!-- Hình ảnh, có thể bị ẩn -->
+            <ImageView fx:id="questionImage" fitWidth="700.0" preserveRatio="true" />
+
+            <!-- ScrollPane chứa câu trả lời -->
+            <ScrollPane fx:id="answerPane" fitToWidth="true" maxHeight="200.0">
                <content>
-                  <VBox fx:id="answerContainer" prefHeight="200.0" prefWidth="786.0" />
+                  <VBox fx:id="answerContainer" spacing="5" />
                </content>
             </ScrollPane>
          </children>
