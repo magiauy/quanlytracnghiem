@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -86,6 +87,14 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
+                <ScrollPane layoutX="20.0" layoutY="50.0" prefHeight="500.0" prefWidth="811.0">
+                    <content>
+                        <VBox fx:id="vboxQuestions" layoutX="20.0" layoutY="50.0" prefWidth="790.0" spacing="10">
+                            <!-- Danh sách câu hỏi sẽ được thêm vào đây -->
+                        </VBox>
+                    </content>
+                </ScrollPane>
+
             </children>
         </AnchorPane>
     </children>

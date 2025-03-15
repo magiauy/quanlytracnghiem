@@ -1,5 +1,6 @@
 package com.sgu.quanlytracnghiem.BUS;
 
+import com.sgu.quanlytracnghiem.DTO.Answers;
 import com.sgu.quanlytracnghiem.DTO.Result;
 import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
 import com.sgu.quanlytracnghiem.Interface.BUS.IdGenerate;
@@ -7,6 +8,7 @@ import com.sgu.quanlytracnghiem.Interface.DAO.GenericDAO;
 import com.sgu.quanlytracnghiem.DAO.Result_DAO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Result_BUS implements CRUD<Result> , IdGenerate {
     ArrayList<Result> results = new ArrayList<>();
@@ -80,6 +82,12 @@ public class Result_BUS implements CRUD<Result> , IdGenerate {
     @Override
     public int generateId() {
         return idGenerate.generateId();
+    }
+    public static String getQuestionContentById(String qID) {
+        return ((Result_DAO) result_dao).getQuestionContentById(qID);
+    }
+    public static List<Answers> getAnswersByQuestionId(String questionID) {
+        return ((Result_DAO) result_dao).getAnswersByQuestionId(questionID);
     }
 
 }

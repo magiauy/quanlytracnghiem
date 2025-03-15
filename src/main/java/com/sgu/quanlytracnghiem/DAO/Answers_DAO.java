@@ -111,7 +111,7 @@ public class Answers_DAO implements GenericDAO<Answers>, IAnswers_DAO {
 
     @Override
     public Answers getById(String id) {
-        Answers answers = new Answers();
+        Answers answers = null;  // Ban đầu đặt null để kiểm tra lỗi
         try {
             String sql = "SELECT * FROM answers WHERE awID = ?";
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -130,6 +130,8 @@ public class Answers_DAO implements GenericDAO<Answers>, IAnswers_DAO {
         } catch (Exception e) {
             log.error("Failed to get answers by id: ", e);
         }
+
+
         return answers;
     }
 

@@ -14,7 +14,7 @@ public class Answers {
     private int questionID;
     private String answerContent;
     private String awPicture;
-    private boolean answerCorrect;
+    private boolean isAnswerCorrect;
     private boolean answerStatus;
 
 
@@ -27,3 +27,25 @@ public class Answers {
 
 // Khi gọi Answers lên trên admin , sẽ gọi toàn bộ các thuộc tính
 //Khi gọi Answers lên trên user bình thường , không gọi thuộc tính answerCorrect và answerStatus
+    // Trả về đối tượng chỉ chứa các thuộc tính cần thiết cho user
+    public Answers getUserView() {
+        return Answers.builder()
+                .answerID(this.answerID)
+                .questionID(this.questionID)
+                .answerContent(this.answerContent)
+                .awPicture(this.awPicture)
+                .build();
+    }
+    public void setAnswerPictures(String answerPictures) {
+        this.awPicture = answerPictures;
+    }
+
+    public void setIsRight(boolean isAnswerCorrect) {
+        this.isAnswerCorrect = isAnswerCorrect;
+    }
+
+    public void setAnswerStatus(boolean answerStatus) {
+        this.answerStatus = answerStatus;
+    }
+
+}
