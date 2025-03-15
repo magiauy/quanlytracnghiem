@@ -15,4 +15,9 @@ public class Exam {
     private String testID;
     private String examOrder;
     private ArrayList<Question> questions;
+
+    @Override
+    public String toString() {
+        return examOrder;
+    }
 }
