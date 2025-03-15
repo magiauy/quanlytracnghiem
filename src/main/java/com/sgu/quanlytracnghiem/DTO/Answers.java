@@ -22,8 +22,6 @@ public class Answers {
     public String toString() {
         return String.valueOf(answerID);
     }
-}
-
 
 // Khi gọi Answers lên trên admin , sẽ gọi toàn bộ các thuộc tính
 //Khi gọi Answers lên trên user bình thường , không gọi thuộc tính answerCorrect và answerStatus
@@ -35,17 +33,6 @@ public class Answers {
                 .answerContent(this.answerContent)
                 .awPicture(this.awPicture)
                 .build();
-    }
-    public void setAnswerPictures(String answerPictures) {
-        this.awPicture = answerPictures;
-    }
-
-    public void setIsRight(boolean isAnswerCorrect) {
-        this.isAnswerCorrect = isAnswerCorrect;
-    }
-
-    public void setAnswerStatus(boolean answerStatus) {
-        this.answerStatus = answerStatus;
     }
 
 }

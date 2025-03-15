@@ -111,7 +111,7 @@ public class Answers_DAO implements GenericDAO<Answers>, IAnswers_DAO {
 
     @Override
     public Answers getById(String id) {
-        Answers answers = null;  // Ban đầu đặt null để kiểm tra lỗi
+        Answers answers = new Answers();  // Ban đầu đặt null để kiểm tra lỗi
         try {
             String sql = "SELECT * FROM answers WHERE awID = ?";
             try (PreparedStatement ps = connection.prepareStatement(sql)) {

@@ -327,8 +327,8 @@ public class Result_DAO implements GenericDAO<Result>, IdGenerate , IResult_DAO 
                 Answers answer = new Answers();
                 answer.setAnswerID(rs.getInt("awID"));
                 answer.setAnswerContent(rs.getString("awContent"));
-                answer.setAnswerPictures(rs.getString("awPictures"));
-                answer.setIsRight(rs.getBoolean("isRight"));
+                answer.setAwPicture(rs.getString("awPictures"));
+                answer.setAnswerCorrect(rs.getBoolean("isRight"));
                 answer.setAnswerStatus(rs.getBoolean("awStatus"));
                 answersList.add(answer);
             }

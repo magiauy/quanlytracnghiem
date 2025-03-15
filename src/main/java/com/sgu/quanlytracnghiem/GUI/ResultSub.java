@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ResultSub {
     @FXML
     private TextField txtUserID, txtUserName, txtExamID, txtExamCode, txtExamDate;
 
-    private Result_BUS resultBus = new Result_BUS();
+//    private Result_BUS resultBus = new Result_BUS();
 
     public void setExamData(Result result) {
         // Thiết lập thông tin người dùng
@@ -36,7 +37,7 @@ public class ResultSub {
         txtExamID.setText(result.getExamID());
         txtExamCode.setText(String.valueOf(result.getResultID()));
         txtExamDate.setText(result.getResultDate().toString());
-        lbDiem.setText("Điểm: " + result.getResultScore());
+        lbDiem.setText("Điểm: " + result.getResultScore().setScale(2, RoundingMode.HALF_UP));
 
         // Đặt các TextField thành chỉ đọc
         txtUserID.setEditable(false);
@@ -55,7 +56,7 @@ public class ResultSub {
         for (Answers answer : result.getAnswers()) {
             groupedAnswers.computeIfAbsent(answer.getQuestionID(), k -> new ArrayList<>()).add(answer);
         }
-
+        int i=1;
         // Hiển thị từng câu hỏi và danh sách câu trả lời đầy đủ của nó
         for (Integer questionID : groupedAnswers.keySet()) {
             // Lấy nội dung câu hỏi
@@ -69,17 +70,20 @@ public class ResultSub {
                     .anyMatch(a -> a.isAnswerCorrect() && a.isAnswerStatus());
 
             // Label hiển thị câu hỏi
-            Label lblQuestion = new Label("Câu hỏi " + questionID + ": " + questionContent);
+            Label lblQuestion = new Label("Câu hỏi " + i + ": " + questionContent);
+            i++;
             lblQuestion.setFont(Font.font(18));
             lblQuestion.setStyle("-fx-padding: 10px; -fx-background-radius: 10px; " +
                     (isQuestionCorrect ? "-fx-background-color: #d4edda;" : "-fx-background-color: #f8d7da;"));
 
             VBox vboxAnswers = new VBox(5); // Chứa danh sách câu trả lời
-
+            int j=0;
             // Hiển thị tất cả các câu trả lời của câu hỏi
             for (Answers answer : allAnswers) {
                 HBox hboxAnswer = new HBox(10);
-                Label lblAnswer = new Label(answer.getAnswerContent());
+                String label =  (char) (65 + j) + ": ";
+                j++;
+                Label lblAnswer = new Label(label+answer.getAnswerContent());
                 lblAnswer.setFont(Font.font(16));
 
                 Label lblStatus = new Label();
