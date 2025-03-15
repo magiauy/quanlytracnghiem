@@ -7,6 +7,7 @@ import com.sgu.quanlytracnghiem.BUS.User_BUS;
 import com.sgu.quanlytracnghiem.DTO.Question;
 import com.sgu.quanlytracnghiem.DTO.User;
 import com.sgu.quanlytracnghiem.Interface.BUS.CRUD;
+import com.sgu.quanlytracnghiem.Interface.BUS.IExcelImport;
 import com.sgu.quanlytracnghiem.Util.UI_Util;
 import com.sgu.quanlytracnghiem.Util.ValidationUtil;
 import javafx.beans.Observable;
@@ -19,9 +20,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
+
+import java.io.File;
 import java.io.IOException;
 
 
@@ -59,11 +63,19 @@ public class UserController {
     @FXML
     private TableColumn<User, String> role;
 
+    @FXML
+    private Button btnImportExcel;
+
     CRUD <User> userBus;
+    IExcelImport excelImport;
 
     public void initialize() {
+        excelImport = new User_BUS();
         userBus = new User_BUS();
         setupTable();
+        btnImportExcel.setOnAction(event -> {
+            importExcel();
+        });
     }
 
     public void setupTable(){
@@ -76,11 +88,33 @@ public class UserController {
         ObservableList<User> data = FXCollections.observableArrayList(userBus.getAll());
         tblUser.setItems(data);
         tblUser.getSelectionModel().selectedItemProperty().addListener((this::onSelected));
-
+        tblUser.refresh();
 
     }
 
     private void onSelected(Observable observable) {
+    }
+
+    public void importExcel(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+        fileChooser.setTitle("Chọn file Excel");
+        fileChooser.setInitialDirectory(null);
+        File file = fileChooser.showOpenDialog(null);
+
+        if (file != null) {
+            try {
+                excelImport.importExcel(file);
+            } catch (Exception e) {
+                ValidationUtil.showErrorAlert("Lỗi", "Lỗi import file");
+            }finally {
+                ValidationUtil.showInfoAlert("Thông báo", "Import thành công");
+                userBus = new User_BUS();
+                setupTable();
+
+            }
+        }
+
     }
 
 
