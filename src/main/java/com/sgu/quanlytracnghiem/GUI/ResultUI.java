@@ -1,7 +1,9 @@
 package com.sgu.quanlytracnghiem.GUI;
 
+import com.sgu.quanlytracnghiem.BUS.Exam_BUS;
 import com.sgu.quanlytracnghiem.BUS.Result_BUS;
 import com.sgu.quanlytracnghiem.DTO.Result;
+import com.sgu.quanlytracnghiem.Interface.BUS.IExam;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -36,8 +38,8 @@ public class ResultUI {
     @FXML
     private TableColumn<Result, String> colExamID;
 
-    @FXML
-    private TableColumn<Result, String> colExamCode;
+//    @FXML
+//    private TableColumn<Result, String> colExamCode;
 
     @FXML
     private TableColumn<Result, LocalDateTime> colExamDate;
@@ -59,19 +61,25 @@ public class ResultUI {
 
     private Result_BUS resultBus;
     private ObservableList<Result> resultList;
+    private IExam examBus;
 
     @FXML
     public void initialize() {
         resultBus = new Result_BUS();
-        resultList = FXCollections.observableArrayList(resultBus.getAll());
+        examBus = new Exam_BUS();
+        if(!Login.getUser().isAdmin()){
+            resultList = FXCollections.observableArrayList(resultBus.getAll().stream().filter(result -> result.getUserID() == Login.getUser().getId()).toList());
+        }else {
+            resultList = FXCollections.observableArrayList(resultBus.getAll());
+        }
 
         colUserID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getUserID()).asObject());
         userName.setCellValueFactory(cellData ->
                 new SimpleStringProperty(Result_BUS.getUsernameById(String.valueOf(cellData.getValue().getUserID())))
         );
-        colExamID.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getExamID()));
-        colExamCode.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getResultID())));
+        colExamID.setCellValueFactory(cellData -> new SimpleStringProperty(examBus.getTestIDByExamID(String.valueOf(cellData.getValue().getExamID()))));
+//        colExamCode.setCellValueFactory(cellData ->
+//                new SimpleStringProperty(String.valueOf(cellData.getValue().getResultID())));
         colExamDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResultDate()));
         colResultScore.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getResultScore()));
 

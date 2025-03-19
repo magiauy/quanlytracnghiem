@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="729.0" prefWidth="848.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sgu.quanlytracnghiem.GUI.ResultUI">
+<AnchorPane prefHeight="729.0" prefWidth="848.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sgu.quanlytracnghiem.GUI.ResultUI">
 
     <children>
         <Pane prefHeight="89.0" prefWidth="848.0" style="-fx-background-color: #07689f;">
@@ -37,10 +37,13 @@
                                 <TableColumn fx:id="colUserID" prefWidth="101.99992883205414" text="Mã thí sinh" />
                                 <TableColumn fx:id="userName" prefWidth="139.33319854736328" text="Thí sinh" />
                                 <TableColumn fx:id="colExamID" prefWidth="128.66673278808594" text="Mã bài thi" />
-                                <TableColumn fx:id="colExamCode" prefWidth="148.66665649414062" text="Mã đề thi" />
+<!--                                <TableColumn fx:id="colExamCode" prefWidth="148.66665649414062" text="Mã đề thi" />-->
                                 <TableColumn fx:id="colExamDate" prefWidth="151.333251953125" text="Ngày thi" />
                                 <TableColumn fx:id="colResultScore" prefWidth="151.3333740234375" text="Điểm" />
                             </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                         </TableView>
                     </children>
                 </AnchorPane>

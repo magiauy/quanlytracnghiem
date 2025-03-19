@@ -11,6 +11,6 @@ public interface IExam {
     void generateExam(Test test);
     ArrayList<Exam> getExamsByTest(String testCode);
     Exam getRandomExamByTest(String testCode);
-
+    String getTestIDByExamID(String examCode);
 
 }

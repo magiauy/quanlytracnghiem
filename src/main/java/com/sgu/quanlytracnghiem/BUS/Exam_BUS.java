@@ -161,4 +161,17 @@ public class Exam_BUS implements CRUD<Exam> , IExam {
         return exams.get(index);
 
     }
+
+    @Override
+    public String getTestIDByExamID(String examID) {
+        for (Exam exam : exams) {
+            if (exam.getExamID().equals(examID)) {
+                return exam.getTestID();
+            }
+        }
+        return null;
+    }
+
+
+
 }
